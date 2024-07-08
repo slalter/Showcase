@@ -1,0 +1,18 @@
+call_type: json_response_sync
+----
+Given the following categories, group together similar categories to reduce the total number of categories.
+There should be 2-4 new categories.
+Remember to make sure that every existing category is mapped to a new category.
+NEVER categorize as "{x}" and "{opposite of x}". 
+NEVER include a generic category like "other fields."
+NEVER use subjective measures.
+
+Both the existing categories and your new categories will be within this category_path:$category_path
+existing categories (id:description): $categories
+organizational purpose: $directive
+
+Respond in the following stringified JSON format. Every existing category should be placed in exactly one of the new categories.
+{
+    newCategoryDescription: [old categoryIds that fit in the new category],
+    otherNewCategoryDescription: [old categoryIds that fit in the new category]
+}

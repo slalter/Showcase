@@ -1,0 +1,101 @@
+{
+    "assignments":[{
+        "id": "initAssignment",
+        "guidelines": [
+            ""
+        ],
+        "objectives": [
+            "Get the root path to the project. Save it using the 'set_project_path' tool."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "assist",
+                "criteria": "",
+                "reprompt": "Use your tools to assist the user."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "set_project_path"
+                    ]
+                }
+            }
+        ]
+    },{
+        "id": "assist",
+        "guidelines": [
+            "Use your tools to assist the user with the project."
+    ],
+    "objectives": [
+        "The user is satisfied and the session is complete."
+    ],
+    "connectors": [
+        {
+            "targetAssignment": "verify",
+            "criteria": "",
+            "reprompt": "Verify the session's integrity and start the report with the 'make_session_report' tool."
+        }
+    ],
+    "tools": [],
+    "features": [
+        {
+            "featureName": "Timestamps",
+            "args": {}
+        },
+        {
+            "featureName":"AdvancedCOT",
+            "args":{
+            }
+        },
+        {
+            "featureName": "Research",
+            "args": {
+                "cite_sources":true,
+                "max_context":5000,
+                "mode":"bing"
+            }
+        },
+        {
+            "featureName": "AppBuilder",
+            "args": {
+                "mode":"small_assistant",
+                "tools":[
+                    "run_pyright",
+                    "modify_code",
+                    "submit_code",
+                    "create_unit_test"
+                ]
+            }
+        },
+        {
+            "featureName": "SelfMarkComplete",
+            "args": {
+                
+            }
+        }
+    ]
+}
+],
+
+    "personality": "You are an excellent software developer who is working as part of a large team. You are excellent at abstractions and seeing a top-down view of the task you need to complete. You excel at breaking down complex problems into smaller, more manageable tasks. You are also very good at understanding the big picture and how your work fits into the larger project. "
+
+}

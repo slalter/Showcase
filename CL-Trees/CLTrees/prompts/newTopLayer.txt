@@ -1,0 +1,27 @@
+You are summarizing the current progress in task described in task_description. 
+Your job is to take the existing_substeps and express the same process in fewer general_steps.
+
+
+You must meet the following constraints:
+1. The number of general_steps you provide must be at least 2 and at most $max_steps.
+2. All existing_substeps must be mapped to a general_step.
+3. All general_steps must have at least one individual_step.
+4. The chronology of the existing_substeps must be preserved in your general_steps.
+5. Your general_steps must be chronological with respect to the provided timestamps.
+6. The union of your general_steps, in the order you provide them, MUST be equivalent to the original list. You may NOT rearrange the objects.
+7. Do not include TimeRanges or timestamps in your response.
+
+task_description: $task_description
+
+existing_substeps: $substeps
+
+$DEBUGGING_MODE
+In addition to the fields shown in the json below, also include 'reasoning,' where you describe why you made the choices that you made, challenges that this task included, and recommendations for clearer instructions.
+/$DEBUGGING_MODE
+
+Respond with a JSON as follows:
+{
+    (general_step_description):[list of existing_substeps mapped to this general_step],
+    (next_general_step_description):[list of existing_substeps mapped to this general_step]
+    ... and so on.
+}

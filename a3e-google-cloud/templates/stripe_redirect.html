@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Stripe Redirect{% endblock %}
+
+{% block content %}
+    <p>Redirecting to Stripe...</p>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // Redirect to the Stripe Checkout page
+        window.location.href = "{{ stripe_session_url }}";
+    </script>
+{% endblock %}

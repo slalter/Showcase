@@ -1,0 +1,28 @@
+call_type: json_response
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning in another field called 'reasoning'.
+----
+# Write your prompt content here. Use $variable_name to insert variables.
+Your job is to look at an input conversation and sub-categorize it according to the subcategories below. If none of the categories is a good fit, make a new one.
+Additionally, flag any messages that meet one of the criteria in 'flags.'
+
+The call already has been classified within this category:
+category: $category
+
+In these categories, 'Buyer' refers to the salesperson, and 'Caller' is the customer.
+subcategories: $categories
+
+conversation_text: $conversation_text
+
+Here is other relevant metadata about the call from retreaver:
+$metadata
+
+Always match category names verbatim.
+respond with a json as follows:
+{
+    subcategory: (matching subcategory or a new one here)
+}

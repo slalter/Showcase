@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<section class="controls">
+            <div class="checkboxes">
+                <label><input type="checkbox" id="use-assignment-json">Use Assignment JSON</label>
+                <label><input type="checkbox" id="use-internal-path" checked>Use Internal Path</label>
+                <label>Internal Path:<input type="text" id="internal-path" value="assignments/question.json"></label>
+            </div>
+        </section>
+
+            <label for="conversation-id">Conversation ID:</label>
+            <input type="text" id="conversation-id" value=''>
+            <button onclick="startConversation()">Start (or restart) Conversation</button>
+            <div id="chat-container">
+                <div id="messages"></div>
+            </div>
+            <input type="text" id="message-input">
+            <button onclick="sendMessage()">Send</button>
+       
+        <section class="entry">
+            <label for="entry_assignment">Entry Assignment:</label>
+            <input type="text" id="entry_assignment" value="initAssignment">
+        </section>
+        <section id="assignment_json" class="assignment-json">
+            <h2 class="collapsible" onclick="toggleAssignmentJSON()">Assignment JSON (collapsible) <span class="indicator">+</span></h2>
+            <textarea id="assignment_json_content" class="content">{}</textarea>
+        </section>
+    </main>
+{% endblock %}
+{% block scripts %}
+
+    <script>
+socket.on('json', function(data) {
+    console.log(data)
+    if(data.request_type === 'new_message') {
+        log('New message received.')
+        addMessage(data.content, 'server')
+    }else if(data.request_type === 'new_conversation') {
+        if(!document.getElementById('conversation-id').value) {
+            document.getElementById('conversation-id').value = data.conversation_id;
+            log('New conversation started with ID: ' + data.conversation_id);
+        }else{
+            log('not starting new conversation, already in one');
+        }
+    }else if(data.request_type === 'run_mock_conversations'){
+        //set the mock conversation results to be the conversation_ids as hrefs
+        var mockConversationResults = document.getElementById('mock-conversation-results');
+        mockConversationResults.innerHTML = '';
+        for(var i = 0; i < data.ids.length; i++) {
+            var conversation_id = data.ids[i];
+            var conversationLink = document.createElement('a');
+            conversationLink.href = 'http://' +data.server_path + ':5002/conversation/' + conversation_id;
+            conversationLink.innerHTML = conversation_id;
+            conversationLink.classList.add('conversation-link');
+            conversationLink.target = "_blank"; // Open link in a new window
+            mockConversationResults.appendChild(conversationLink);
+            mockConversationResults.appendChild(document.createElement('br'));
+        log('Mock conversation started with ID: ' + conversation_id);
+        }
+        }else if(data.request_type === 'load_mock_settings') {
+            loadMockSettings(data);
+            log('Loaded mock settings');
+        }else{
+        log(data);
+        }
+    }
+);
+
+
+function sendMessage() {
+    var message = document.getElementById('message-input').value;
+    var conversation_id = document.getElementById('conversation-id').value;
+    socket.emit('message', 
+    {
+        
+        request_type: 'send_message',
+        conversation_id: conversation_id,
+        message: message,
+        request_id: String(uuid.v4())
+        
+    });
+    addMessage(message, 'user');
+    document.getElementById('message-input').value = '';
+}
+
+function addMessage(message, type) {
+    var messagesContainer = document.getElementById('messages');
+    var msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', type === 'user' ? 'user-message' : 'server-message');
+    msgDiv.innerHTML = message;
+    messagesContainer.appendChild(msgDiv);
+}
+
+
+function toggleAssignmentJSON() {
+    var content = document.getElementById("assignment_json_content");
+    var indicator = document.querySelector(".collapsible .indicator");
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        indicator.innerHTML = "+"; // Change to '+' when collapsed
+    } else {
+        content.style.display = "block";
+        indicator.innerHTML = "-"; // Change to '-' when expanded
+        // Adjust the height of the textarea
+        adjustTextareaHeight(content);
+    }
+}
+
+
+function startConversation() {
+    var assignmentJSON = document.getElementById('assignment_json_content').innerHTML;
+    //slice so that the string goes from { to } inclusive
+    assignmentJSON = assignmentJSON.slice(assignmentJSON.indexOf('{'), assignmentJSON.lastIndexOf('}') + 1);
+    var entryAssignment = document.getElementById('entry_assignment').value;
+    try {
+        JSON.parse(assignmentJSON);
+    } catch (e) {
+        alert('Invalid JSON in Assignment JSON field');
+        return;
+    }
+    //ensure all fields are filled, otherwise make a popup
+    if (!assignmentJSON || !entryAssignment) {
+        //alert which field wasn't filled
+        var alertString = '';
+        if (!assignmentJSON) {
+            alertString += 'Assignment JSON\n';
+        }
+        if (!entryAssignment) {
+            alertString += 'Entry Assignment\n';
+        }
+        alert('Please fill the following fields:\n' + alertString);
+        return;
+    }
+    //if we are currently in a conversation, close it
+    if(document.getElementById('conversation-id').value) {
+        socket.emit('json',
+        {
+            request_type: 'close_conversation',
+            conversation_id: document.getElementById('conversation-id').value,
+            request_id: String(uuid.v4())
+        });
+    }
+    payload = {
+        request_type: 'new_conversation',
+        request_id: String(uuid.v4()),
+        entry_assignment: entryAssignment
+    }
+    if(document.getElementById('use-internal-path').checked) {
+        if (!document.getElementById('internal-path').value) {
+            alert('Please fill the Internal Path field');
+            return;
+        }
+        //if use-assignment-json is checked, alert error
+        if(document.getElementById('use-assignment-json').checked) {
+            alert('Cannot use both Internal Path and Assignment JSON');
+            return;
+        }
+        payload['assignment_json_path'] = document.getElementById('internal-path').value;
+    }else
+    {
+        payload['assignment_json'] = assignmentJSON;
+    }
+
+    log('Starting new conversation with payload: ' + JSON.stringify(payload));
+    socket.emit('json',
+    payload);
+
+    //reset the messages and conversation_id
+    document.getElementById('messages').innerHTML = '';
+    document.getElementById('conversation-id').value = '';
+}
+
+
+
+
+</script>
+
+{% endblock %}
+

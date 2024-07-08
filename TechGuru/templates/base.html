@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        header p {
+            margin: 0;
+        }
+        a, button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        a:hover, button:hover {
+            background-color: #45a049;
+        }
+        form {
+            display: inline; /* Keep the button on the same line as the greeting text */
+        }
+        .content, .scripts {
+            padding: 20px;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .user-info {
+        display: flex;
+        align-items: center;
+        }
+
+        .user-info p {
+            margin-right: 10px;
+        }
+        #messages {
+    height: 350px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.message {
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.user-message {
+    background-color: #dcf8c6;
+    text-align: right;
+}
+
+.server-message {
+    background-color: #eef;
+    text-align: left;
+}
+    </style>
+</head>
+<body>
+    <header>
+
+    </header>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuid.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+        <script src="/static/base.js"></script>
+
+        {% block scripts %}{% endblock %}
+
+    </div>
+</body>
+<footer>
+    <div id="log">
+        <h2>Log</h2>
+        <div id="log-content"></div>
+    </div>
+</footer>
+</html>

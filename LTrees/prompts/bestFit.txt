@@ -1,0 +1,21 @@
+call_type: json_response_sync
+----
+Determine to which of the categories the input belongs. If no category is an accurate fit or a new category would better describe the input, return false for ideal_fit_exists.
+
+Your response should always be in JSON format as follows. Respond with nothing but the JSON.
+
+{
+    "categoryId": categoryId here or omit this field if no ideal fit exists,
+    "proposed_new_category": a proposed new category if there is no fit that exists. It should be similar in intention to the existing categories.
+}
+
+Here is the CATEGORY_PATH to our current location. The category you choose will be appended to this path: $category_path
+
+Here are the categories (categoryId:description) pairs : $categories
+
+Here is the input: $input
+
+Categorizational purpose: $directive
+Please be very specific in your categorization. If no category is an accurate fit for the input, return false for 'ideal_fit_exists.'
+Remember to put the categoryId in your output, NOT the description.
+Think carefully about whether a good fit exists.

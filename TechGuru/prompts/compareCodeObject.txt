@@ -1,0 +1,33 @@
+call_type: json_response_sync
+mode: OPEN_AI
+logging_mode: save_to_csv
+timeout: 120
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+return_type: dict[str, list[int]]
+----
+A new {{ $object_type }} has been requested, but first we need to make sure we aren't rebuilding something we already have.
+
+Here is the method that was requested:
+requested_method: {{ $requested_method_description }}
+{% if requested_method_output %}
+requested_method_output: {{ $requested_method_output }}
+{% endif %}
+{% if requested_method_input %}
+requested_method_input: {{ $requested_method_input }}
+{% endif %}
+
+Here are the closest things we already have:
+{% for i in $matches %}
+#{{ loop.index }}:
+    description: {{ i['description'] }}
+    input: {{ i['input'] }}
+    output: {{ i['output'] }}
+{% endfor %}
+
+
+Respond with a json as follows:
+{
+    'similar_method_numbers':[method_numbers] ### A list of method_numbers for existing methods that are similar enough that they might already encompass a significant part of the required functionality.
+}

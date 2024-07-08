@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Main landing page for start.a3e.com.{% endblock %}
+
+{% block content %}
+{% if not user and not is_local%}
+Login to see options.
+    <a href="{{ url_for('login') }}">Login</a>
+{% else %}
+{% if user  %}
+    <h1>Welcome, {{ user.first_name }}!</h1>
+{% endif %}
+{%endif%}
+    
+{% endblock %}
+

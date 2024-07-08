@@ -1,0 +1,43 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+    'beta', 'functions', 'deploy', 'process_transcript',
+    '--gen2',
+    '--trigger-http',
+    '--runtime', 'python311',
+    '--source', './process_transcript/',
+    '--allow-unauthenticated',
+    '--set-env-vars', 'PRODUCTION=True',
+    '--region','us-east1',
+    '--entry-point','app_wrap',
+    '--memory', '1GB',  
+    '--cpu', '0.583',         
+    '--timeout', '300s',  
+    '--max-instances', '60'  
+  ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+    'beta', 'functions', 'deploy', 'cron',
+    '--gen2',
+    '--trigger-http',
+    '--runtime', 'python311',
+    '--source', './process_transcript/',
+    '--allow-unauthenticated',
+    '--set-env-vars', 'PRODUCTION=True',
+    '--region','us-east1',
+    '--entry-point','app_wrap',
+    '--memory', '4GB',  
+    '--cpu', '1',         
+    '--timeout', '3600s',  
+    '--max-instances', '3'  
+  ]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['beta','functions', 'deploy', 'handle_storage_trigger', '--gen2','--trigger-http', '--runtime', 'python311', '--source', './handle_storage_trigger/', '--allow-unauthenticated',--set-env-vars=PRODUCTION=True',
+    '--region','us-east1',
+    '--memory', '256MB',  
+    '--cpu', '0.167',         
+    '--timeout', '60s',  
+    '--max-instances', '100'  
+    ]
+options:
+  logging: CLOUD_LOGGING_ONLY

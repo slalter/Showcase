@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+<style>
+    #productList {
+        list-style-type: none;
+        padding: 0;
+    }
+    #productList li {
+        background-color: #fff;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .product-actions, .folder-actions {
+        margin-top: 10px;
+    }
+    .product-actions form, .folder-actions form {
+        display: inline;
+        margin-right: 10px;
+    }
+    .control-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: left;
+        margin-bottom: 5px;
+    }
+    .control-label {
+        flex: 1;
+        text-align: left;
+        margin-right: 10px;
+        size: 20px;
+        font-weight: bold;
+    }
+    .controls {
+        flex: 2;
+    }
+</style>
+
+<h1>Admin</h1>
+
+<h2>Products</h2>
+<ul id="productList">
+    {% for product in products %}
+    <li id="product-{{ product.name }}">
+        <div class="control-group">
+            <span class="control-label">{{ product.name }}</span>
+            <div class="controls">
+                <button onclick="toggleFolders('{{ product.name }}')">Toggle Folders</button>
+            </div>
+        </div>
+        <div id="{{ product.name }}" style="display:none;">
+            <ul id="folderList-{{ product.name }}">
+                {% for folder in product.folders %}
+                <li id="folder-{{ product.name }}-{{ folder }}">
+                    {{ folder }}
+                    <div class="folder-actions">
+                        <form action="{{ url_for('deleteFolder') }}" method="post" data-product="{{ product.name }}" data-folder="{{ folder }}">
+                            <input type="submit" value="Remove Folder">
+                            <input type="hidden" name="product_name" value="{{ product.name }}">
+                            <input type="hidden" name="folder_name" value="{{ folder }}">
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <form action="{{ url_for('createFolder') }}" method="post" data-product="{{ product.name }}">
+                <input type="text" name="folder_name" placeholder="New Folder Name">
+                <input type="hidden" name="product_name" value="{{ product.name }}">
+                <input type="submit" value="Add Folder">
+            </form>
+        </div>
+        <div class="product-actions">
+            <form action="{{ url_for('deleteProduct') }}" method="post" data-product="{{ product.name }}">
+                <input type="submit" value="Remove Product">
+                <input type="hidden" name="product_name" value="{{ product.name }}">
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Add Product</h2>
+<p>Add a new product to the list:</p>
+<form action="{{ url_for('addProduct') }}" method="post">
+    <input type="text" name="product_name" placeholder="Product Name">
+    <input type="submit" value="Add Product">
+</form>
+{% endblock %}
+{% block scripts %}
+<script>
+    function toggleFolders(productName) {
+        var element = document.getElementById(productName);
+        element.style.display = (element.style.display === 'none') ? 'block' : 'none';
+    }
+    function setListeners(form){
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const jsonObject = {};
+            for (const [key, value] of formData.entries()) {
+                jsonObject[key] = value;
+            }
+            fetch(form.action, {
+                method: form.method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonObject)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.message === 'Success') {
+                    if (form.hasAttribute('data-product')) {
+                        if (form.hasAttribute('data-folder')) {
+                            // Remove folder
+                            let folderElement = document.getElementById(`folder-${form.getAttribute('data-product')}-${form.getAttribute('data-folder')}`);
+                            folderElement.remove();
+                        } else {
+                            // Add or remove folder
+                            if (jsonObject.folder_name) {
+                                // Add folder
+                                let folderList = document.getElementById(`folderList-${jsonObject.product_name}`);
+                                let newFolder = document.createElement('li');
+                                newFolder.id = `folder-${jsonObject.product_name}-${jsonObject.folder_name}`;
+                                newFolder.textContent = jsonObject.folder_name;
+
+                                let removeForm = document.createElement('form');
+                                removeForm.action = "{{ url_for('deleteFolder') }}";
+                                removeForm.method = "post";
+                                removeForm.setAttribute('data-product', jsonObject.product_name);
+                                removeForm.setAttribute('data-folder', jsonObject.folder_name);
+                                removeForm.innerHTML = `<input type="submit" value="Remove Folder" method="post"><input type="hidden" name="product_name" value="${jsonObject.product_name}"><input type="hidden" name="folder_name" value="${jsonObject.folder_name}">`;
+
+                                newFolder.appendChild(removeForm);
+                                folderList.appendChild(newFolder);
+                                setListeners(removeForm);
+                            } else {
+                                // Remove product
+                                let productElement = document.getElementById(`product-${form.getAttribute('data-product')}`);
+                                productElement.remove();
+                            }
+                        }
+                    } else {
+                        // Add product
+                        let productList = document.getElementById('productList');
+                        let newProduct = document.createElement('li');
+                        newProduct.id = `product-${jsonObject.product_name}`;
+                        newProduct.innerHTML = `${jsonObject.product_name} <button onclick="toggleFolders('${jsonObject.product_name}')">Toggle Folders</button>`;
+
+                        let divContainer = document.createElement('div');
+                        divContainer.id = `${jsonObject.product_name}`;
+                        divContainer.style.display = 'none';
+
+                        let folderList = document.createElement('ul');
+                        folderList.id = `folderList-${jsonObject.product_name}`;
+                        divContainer.appendChild(folderList);
+
+                        let createForm = document.createElement('form');
+                        createForm.action = "{{ url_for('createFolder') }}";
+                        createForm.method = "post";
+                        createForm.setAttribute('data-product', jsonObject.product_name);
+                        createForm.innerHTML = `<input type="text" name="folder_name" placeholder="New Folder Name"><input type="hidden" name="product_name" value="${jsonObject.product_name}"><input type="submit" value="Add Folder">`;
+
+                        divContainer.appendChild(createForm);
+                        newProduct.appendChild(divContainer);
+
+                        productList.appendChild(newProduct);
+                        
+                        let formElement = document.createElement('form');
+                        formElement.action = "{{ url_for('deleteProduct') }}";
+                        formElement.method = "post";
+                        formElement.setAttribute('data-product', jsonObject.product_name);
+                        formElement.innerHTML = `<br><input type="submit" value="Remove Product"><input type="hidden" name="product_name" value="${jsonObject.product_name}">`;
+                        newProduct.appendChild(formElement);
+                        productList.appendChild(newProduct);
+                        setListeners(formElement);
+                        setListeners(createForm);
+                    }
+                } else {
+                    alert('Failed to modify product list.');
+                }
+            });
+        });
+    }
+    document.querySelectorAll('form').forEach(form => {
+        if(form.method === 'post') {
+            setListeners(form);
+        }
+        });
+</script>
+{% endblock %}

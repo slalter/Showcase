@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+python-dotenv = "*"
+flask = "*"
+flask-sqlalchemy = "*"
+psycopg2 = "*"
+flask-cors = "*"
+alembic = "*"
+authlib = "*"
+requests = "*"
+charset-normalizer = "*"
+chardet = "*"
+google-cloud = "*"
+google-cloud-secret-manager = "*"
+stripe = "*"
+sendgrid = "*"
+flask-admin = "*"
+google-api-python-client = "*"
+flask-session = "*"
+redis = "*"
+gunicorn = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

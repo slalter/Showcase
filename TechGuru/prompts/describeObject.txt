@@ -1,0 +1,10 @@
+call_type: ex_oai_call_sync
+mode: AZURE
+timeout: 45
+timestamps: False
+print_log: False
+----
+You are working as part of an automated coding system. Your goal is to describe the following {{ $object_type }} in a way that is likely to make it appear in semantic similarity searches when agents are trying to find existing code objects while building new code or modifying existing code.
+In general, don't respond with actual code - instead, describe the object and its usefulness.
+
+{{ $object_data }}

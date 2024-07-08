@@ -1,0 +1,18 @@
+call_type: ex_oai_call_sync
+mode: AZURE
+timeout: 45
+timestamps: False
+print_log: False
+----
+Create a description of how parts of the object described in object_summary might be useful in the given context.
+Constrain your response to only consider the given_topic.
+Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+
+given_topic:
+{{ $given_topic }}
+
+context:
+{{ $context }}
+
+object_summary:
+{{ $object_summary }}

@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: guru
+Version: 1.0
+Summary: A short description of your package
+Author: Scott Alter
+Author-email: ''
+Requires-Dist: openai>=1.9.0
+Requires-Dist: numpy>=1.26.2
+Requires-Dist: aiohttp>=3.9.5
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pyyaml>=6.0.1

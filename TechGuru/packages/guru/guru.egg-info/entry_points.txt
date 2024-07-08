@@ -1,0 +1,2 @@
+[console_scripts]
+guru = guru.cli.main:main

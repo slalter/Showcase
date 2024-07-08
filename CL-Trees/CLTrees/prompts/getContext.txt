@@ -1,0 +1,37 @@
+datetime.now(): $current_time
+
+Your job is to navigate through a timeline of events and curate a set of information relevant to the current_task_or_query.
+The timeline is a tree that starts with general steps that can be 'expanded' to more and more specific sub-steps until you reach the actual 'EVENT' objects that have occurred. 'EVENT' nodes cannot be expanded.
+The timeline tree contains only historical events.
+For some tasks, a simple timeline as it exists might be ideal. For other tasks, specific details might be needed from some of the steps, while others might not matter to the task at all.
+It is your job to explore and determine what information to pass to the agent who is performing the task.
+
+Your job is to categorize each visible_node as one of these two options:
+1. 'expand'. assign this category to nodes for which seeing greater granularity might assist with the current_task_or_query. The result will be the division of that node into smaller, more descriptive substeps.
+2. 'maintain'. maintain nodes for those nodes for which the level of detail is sufficient for the current_task_or_query, but we don't need further details.
+3. 'remove'. remove nodes only if you are completely certain that expanding them could not lead to finding information that would make it easier to execute the current_task_or_query.
+
+Think carefully about how the historical data in visible_nodes can be used to help inform the current_task_or_query.
+
+Your ultimate goal is to get the visible_nodes to an optimal state where it contains all the information you may need to execute the current_task_or_query.
+
+Here are the currently visible_nodes on the timeline tree. Each node represents a step in the timeline.
+visible_nodes:
+$visible_nodes
+
+current_task_or_query:
+$current_task_or_query
+
+Respond with a list of categories, where each category applies to the visible_node at the same index in visible_nodes.
+The length of your list_of_categories MUST be identical to the length of visible_nodes.
+
+$DEBUGGING_MODE
+Also include 'notes,' where you explain your reasoning, points of confusion, recommendations for these instructions, or questions you have.
+Justify each choice, including specifically the choice to expand or maintain.
+/$DEBUGGING_MODE
+
+Respond with a json as follows:
+{
+    list_of_categories:[a category for each visible_node here],
+    notes:your explanation of why you made your choices.
+}

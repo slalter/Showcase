@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Google Drive Project Folder Creator{% endblock %}
+
+        {% block content %}
+        <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+        
+        <input type="text" id="project-num" placeholder="Project Number">
+        <label for="prod-type">Project Type:</label>
+        <select id="prod-type">
+        {% for product in products %}
+            <option value="{{ product.name }}">{{ product.name }}</option>
+        {% endfor %}
+        </select>
+
+        <label for="address">Project Location:</label>
+        <input type="text" id="address" placeholder="Start typing an address..." size="60">
+
+        <button id="create_folder" onclick="fetchData()">Create Project Folders</button><br><br>
+        <button id="open_folder" style="display: none;">Open Project Folder</button><br><br>
+        <button id="refresh_page" onclick="window.location.reload()" style="display: none;">Refresh Page</button>
+        <textarea id="output" rows="10" cols="50"></textarea>
+        {% endblock %}
+        {% block scripts %}
+        
+        <script>
+            const addressInput = document.getElementById('address');
+                
+            // Create the autocomplete object
+            const autocomplete = new google.maps.places.Autocomplete(addressInput);
+            
+            // Listen for place selection
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace();
+
+                // Set the value of the input to the formatted address
+                if (place.formatted_address) {
+                    addressInput.value = place.formatted_address;
+                } else {
+                    console.log('No formatted address found.');
+                }
+            });
+            function fetchData() {
+                button = document.getElementById("create_folder")
+                button.style.display = 'none'
+                var jsonIn = {
+                    'project_num':document.getElementById('project-num').value,
+                    'prod_type':document.getElementById('prod-type').value,
+                    'address':document.getElementById('address').value
+                }
+                console.log(jsonIn)
+                console.log(JSON.stringify(jsonIn))
+                var url = "{{ url_for('make_folders') }}";
+                document.getElementById("output").value = "working..."
+                // Force a reflow by manipulating the style property
+                document.getElementById("output").style.display = "none";
+                document.getElementById("output").offsetHeight; // This line triggers a reflow
+                document.getElementById("output").style.display = "block";
+                fetch(url, {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify(jsonIn)
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                    console.log(data);
+                    // open another tab (out of focus) for the url of the folder, given back as data.url
+                    if (data.url){
+                        if (data.error){
+                            output = data.error + "\n" + "Click the button to go to the existing folder."
+                        }else{
+                            output = "Successfully created! If you didn't get a new tab, please allow popups for this site."
+                        }
+                        document.getElementById("open_folder").onclick = function() {
+                            newWindow = window.open(data.url, '_blank');
+                        }
+                        document.getElementById("open_folder").style.display = 'block'
+                    }else{
+                        output = "Error: " + data.error
+                    }
+                    document.getElementById("output").value = output
+                    // Force a reflow by manipulating the style property
+                    document.getElementById("output").style.display = "none";
+                    document.getElementById("output").offsetHeight; // This line triggers a reflow
+                    document.getElementById("output").style.display = "block";
+                    document.getElementById("refresh_page").style.display = 'block'
+
+                        
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                    
+            }
+            
+        </script>
+        {% endblock %}
+            

@@ -1,0 +1,7 @@
+This is an old project from the early days of openai's API. It uses some simple abstractions around Messages and Conversations that later got fleshed out into the 'guru' package (see TechGuru).
+
+Takes lists of phone numbers and names and uses twilio to try to qualify the leads and send them to a live agent with gpt3.5. 
+
+Uses buckets for storage. 
+
+This old project is a testament to how far I have come.

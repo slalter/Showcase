@@ -1,0 +1,18 @@
+model: gpt-4-turbo-preview
+call_type: ex_oai_call
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+----
+Use the given information to determine how likely each category is to have the information that the user is looking for.
+
+information: $information
+
+categories: $categories
+
+respond with a stringified python list containing decimal weights on [0,1] that represent how likely the corresponding category is to contain the information you are looking for. Your weights are mapped to the categories based on their position in the list.
+The weights should sum to 1.
+Respond with just the stringified python list and nothing more.

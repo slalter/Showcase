@@ -1,0 +1,13 @@
+call_type: ex_oai_call_sync
+----
+Use the given information to determine how likely each category is to have the best match.
+
+information: $information
+
+categories: $categories
+
+Respond with a stringified python list containing decimal weights on [0,1] that represent how likely the corresponding category is to contain the information you are looking for. Your weights are mapped to the categories based on their position in the list.
+The weights don't need to sum to 1. 
+If it seems like it would be better to gather more information before proceeding, simply return an empty list instead. 
+It is always better to gather more information than to proceed with any degree of uncertainty.
+Respond with just the stringified python list and nothing more.

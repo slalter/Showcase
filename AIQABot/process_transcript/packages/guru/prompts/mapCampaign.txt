@@ -1,0 +1,19 @@
+call_type: json_response
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+----
+# Write your prompt content here. Use $variable_name to insert variables.
+Given the information about the campaign, identify which of the campaign categories the campaign belongs to.
+
+campaign categories: $campaign_categories
+
+campaign information: $campaign_info
+
+Respond with a json as follows:
+{
+    campaign_category: (your choice here, or null if no good fit exists.)
+}

@@ -1,0 +1,19 @@
+call_type: json_response_sync
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+----
+# Write your prompt content here. Use $variable_name to insert variables.
+Your job is to determine which of the conditions best describes the conversation.
+
+conditions: $conditions
+
+conversation: $conversation
+
+Your response should match the following JSON format. Respond with an appropriately formatted JSON and nothing more. 
+{
+    "best_match": condition ID here
+}

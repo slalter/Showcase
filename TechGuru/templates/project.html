@@ -1,0 +1,110 @@
+
+{% extends "base.html" %}
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+    <h1>Project: {{ project.name }}</h1>
+
+    <!-- Project Info Section -->
+    <div class="section">
+        <h2>Project Info</h2>
+        <p>Project ID: {{ project.id }}</p>
+        <p>Status: {{ project.status }}</p>
+        <pre>Code: \n{{ project.code }}</pre>
+        <!-- button to view conversation log in a new window-->
+        <button onclick="window.open('/report/{{ project.logging_cid }}', '_blank')">View Conversation Log</button>
+
+    <!-- Object Requests Section -->
+    <div class="section">
+        <h2>Object Requests</h2>
+        {% for object_request in project.object_requests %}
+            
+                <details>
+                    <summary>Request ID: {{ object_request.id }}</summary>
+                    <div>
+                        <p>Request Type: {{ object_request.request_type }}</p>
+                        <p>Description: {{ object_request.description }} </p>
+                        <p>Status: {{ object_request.status }}</p>
+                        <p>Code: {{object_request.code}}</p>
+                        <!--button to view logs in new window-->
+                        <button onclick="window.open('/report/{{ object_request.logging_cid }}', '_blank')">View Logs</button>
+                    </div>
+                </details>
+               
+        {% endfor %}
+    </div>
+
+    <!-- Methods Section -->
+    <div class="section">
+        <h2>Methods</h2>
+        {% for method in project.methods %}
+            <details>
+                <summary>Method Name: {{ method.name }}</summary>
+                <div>
+                    <p>Status: {{ method.status }}</p>
+                    <!--button to view logs in a new window-->
+                    <button onclick="window.open('/report/{{ method.logging_cid }}', '_blank')">View Logs</button>
+                </div>
+            </details>
+        {% endfor %}
+    </div>
+
+    <!-- Models Section -->
+    <div class="section">
+        <h2>Models</h2>
+        {% for model in project.models %}
+            <details>
+                <summary>Model Name: {{ model.name }}</summary>
+                <div>
+                    <p>Status: {{ model.status }}</p>
+                    <!--button to view logs in a new window-->
+                    <button onclick="window.open('/report/{{ model.logging_cid }}', '_blank')">View Logs</button>
+                </div>
+            </details>
+        {% endfor %}
+    </div>
+
+    <!-- Main Component Section -->
+    <div class="section">
+        <h2>Main Component</h2>
+        <details>
+            {% if project.main %}
+            <summary>Main ID: {{ project.main.id }}</summary>
+            <div>
+                <p>Status: {{ project.main.status }}</p>
+                <p>Logs:</p>
+                <ul>
+                    {% for log in project.main.getLogs(session) %}
+                        <li>{{ log }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </details>
+        {% else %}
+            <p>No main component found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Design Decisions Section -->
+    <div class="section">
+        <h2>Design Decisions</h2>
+        {% for decision in project.design_decisions %}
+            <details>
+                <summary>Decision ID: {{ decision.id }} - {{ decision.decision }}</summary>
+                <div>
+                    <p>Description: {{ decision.description }}</p>
+                    <p>Decision: {{decision.decision}}</p>
+                    <p>Logs:</p>
+                    <ul>
+                        {% for log in decision.getLogs(session) %}
+                            <li>{{ log }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </details>
+        {% endfor %}
+    </div>
+
+    {% endblock %}

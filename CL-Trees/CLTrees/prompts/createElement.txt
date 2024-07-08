@@ -1,0 +1,16 @@
+Your job is to take the input_data and provide the following fields:
+task_name: a description of what occurred in the task in fewer than 5 words. This should be as specific as possible.
+task_summary: a more detailed description of what occurred in the task, fewer than 2 paragraphs. Do not explain relevance, simply describe the process as succinctly as possible.
+relevant_data: any relevant data from the task that may need to be accessed in the future. Include a description of how to interpret the data, if necessary.
+
+here is the data:
+$data
+
+You do not need to concern yourself with the rules, regulations, or instructions themselves as provided in the data.
+Instead, focus on what tasks have been accomplished and the details of those tasks.
+
+Respond with a JSON containing the fields described above.
+
+$DEBUGGING_MODE
+Additionally, include a field called 'notes' that explains your reasoning, describes anything that was especially difficult to do, and provides recommendations for clearer instructions, if applicable.
+/$DEBUGGING_MODE

@@ -1,0 +1,120 @@
+
+{% import 'admin/layout.html' as layout with context -%}
+{% import 'admin/static.html' as admin_static with context %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        header p {
+            margin: 0;
+        }
+        a, button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        a:hover, button:hover {
+            background-color: #45a049;
+        }
+        form {
+            display: inline; /* Keep the button on the same line as the greeting text */
+        }
+        .content, .scripts {
+            padding: 20px;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .user-info {
+        display: flex;
+        align-items: center;
+        }
+
+        .user-info p {
+            margin-right: 10px;
+        }
+        pre {
+            white-space: pre-wrap;       /* CSS 2.1 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* IE 5.5+ */
+            overflow-wrap: break-word;   /* CSS3 */
+        }
+        .isolated-container, .isolated-container * {
+            all: unset;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        {% if is_testing %}
+        <p style = "color: red; font-weight: bold; font-size: larger;">-----------Testing mode---------</p>
+
+        {% endif %}
+
+        {% if user or is_local or 'db' in request.url %}
+        <div class="user-info">
+            <p>Welcome, {{ user.first_name if user else '' }}!</p>
+            <form action="{{ url_for('logout') }}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <form action="{{ url_for('make_button') }}" method="get" style="display: inline;">
+                <button type="submit">Make Button</button>
+            </form>
+            <form action="{{ url_for('new_project') }}" method="get" style="display: inline;">
+                <button type="submit">Create Folders For New Project</button>
+            </form>
+    
+            {% if (user and user.is_admin) or is_local or 'db' in request.url%}
+            <form action="{{ url_for('db.index') }}" method="get" style="display: inline;">
+                <button type="submit">Database</button>
+            </form>
+            <form action="{{ url_for('admin_page') }}" method="get" style="display: inline;">
+                <button type="submit">Admin</button>
+            </form>
+            {% endif %}
+        {% endif %}
+        </div>
+
+    </header>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <div>
+    {% block isolated_content %}{% endblock %}
+</div>
+    <div class="scripts">
+        {% block scripts %}{% endblock %}
+    </div>
+</body>
+</html>

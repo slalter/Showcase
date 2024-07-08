@@ -1,0 +1,19 @@
+call_type: json_response_sync
+----
+Given the existing_categories, come up with between $min_new_cats and $max_new_cats new non-empty super_categories that contain the existing_categories.
+Each of the existing_categories must be mapped to exactly one of the super_categories, with no duplication. No existing_categories may be ommited.
+NEVER categorize as "{x}" and "{opposite of x}". 
+NEVER include a generic category like "other fields."
+Whenever possible, avoid making categories that are simply 'X + Y' to summarize categories X and Y. 
+Instead, come up with original super_categories that represent a commonality between some subset of the existing_categories.
+
+Both the existing categories and your new categories will be within this category_path:$category_path
+existing_categories (id:description): $categories
+organizational purpose: You are sorting according to $directive
+
+Respond in the following stringified JSON format. Every existing category should be placed in exactly one of the new categories.
+{
+    newCategoryDescription: [old categoryIds that fit in the new category],
+    otherNewCategoryDescription: [old categoryIds that fit in the new category],
+    ...
+}

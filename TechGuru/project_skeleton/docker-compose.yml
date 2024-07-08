@@ -1,0 +1,76 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - alembic
+    environment:
+      - CONTAINER_ROLE=web
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - FLASK_APP=app.py
+      - WEB_NAME=web
+      - PORT=5000
+    networks:
+      - main_network
+
+  alembic:
+    build: 
+      context: .
+      dockerfile: Dockerfile.alembic
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - FLASK_APP=app.py
+      - PORT=5000
+      - WEB_NAME=web
+      - REDIS_NAME=redis
+    networks:
+      - main_network
+
+  db:
+    image: postgres:latest
+    command: ["postgres", "-c", "max_connections=100","-c","shared_buffers=8096MB","-c","work_mem=256MB"]
+    volumes:
+      - /mnt/data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: techgurudb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - main_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/local:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs:ro
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - web
+    networks:
+      - main_network
+
+
+      
+
+volumes:
+  postgres_data:
+
+networks:
+  main_network:
+    driver: bridge

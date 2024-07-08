@@ -1,0 +1,2 @@
+In the tool json, 'required' must be used.
+All tool and feature arguments, regardless of 'required' status, must use .get(arg,None) and be robust to the case of None.

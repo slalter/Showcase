@@ -1,0 +1,39 @@
+call_type: json_response_sync
+mode: OPEN_AI
+logging_mode: save_to_csv
+timeout: 120
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+return_type: dict[dict[str, str]] | dict[str, int]
+----
+A developer has asked for you to make a standardization decision to standardize the codebase.
+
+This is the stack the codebase is running with:
+{{ $stack_description }}
+
+Here is the request:
+standardization_request: {{ $description }}
+relevant_for: {{ $relevant_for_list }}
+
+Here are the standardization decisions we have already made which are the closest:
+{% for i in $matches %}
+#{{ loop.index }}:
+    description: {{ i.description }}
+    relevant_for: {% for j in i.relevant_fors %}{{j}}, {% endfor %}
+    decision: {{ i.decision }}
+{% endfor %}
+
+If similar decisions have been made, but this case is somewhat unique, use the existing decisions to inform the choice you make.
+
+In all cases, use your best judgement to make a definitive decision that the development team can reference when they are building the project.
+
+Respond with a json as follows. Include one of, but not both, new_standardization or standardization_already_exists.
+{
+    'new_standardization':{
+        'description': describe the standardization,
+        'relevant_for_list': list of tasks, packages, and/or parts of the codebase that this decision applies to,
+        'decision': the standardization decision that you make.
+    },
+    'standardization_already_exists': (integer) the # of the existing standardization that applies to the situation. 
+}

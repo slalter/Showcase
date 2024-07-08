@@ -1,0 +1,16 @@
+Your job is to take the given_data use it to make a report containing all relevant_context for the current_task_or_query.
+Only include information from the given_data. You may summarize the given_data and cherrypick it, but you may not modify or add to it.
+Information in given_data is completed steps pulled out of a timeline, and the order of the given_data is the chronological order in which the steps described in the given_data occurred.
+
+
+given_data:
+$given_data
+
+current_task_or_query:
+$current_task_or_query
+
+respond with a json as follows:
+{
+    "relevant_data": (all relevant context from given_data),
+    "notes": (any notes you have about the data and the query.)
+}

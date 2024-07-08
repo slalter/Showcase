@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container {
+                display: flex;
+                flex-wrap: wrap; /* Allows sections to wrap onto the next line if there isn't enough horizontal space */
+                justify-content: space-between; /* Adjusts the spacing between the child elements */
+                gap: 20px; /* Adds space between the flex items */
+            }
+        .section {
+            flex: 1; /* Allows each section to grow to fill the container, adjust this value as needed */
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px; /* Ensures that the section has a minimum width, adjust this value as needed */
+        }
+        .category, .flag, .question {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }        
+        .input-group { margin-bottom: 10px; }
+        input[type="text"], select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 95%; }
+        button, .remove-btn { padding: 8px 16px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover, .remove-btn:hover { background-color: #0056b3; }
+        .remove-btn { background-color: #ff0000; color: white; width: 15px; height: 15px; text-align: center; line-height: 15px; border-radius: 50%; cursor: pointer; font-weight: bold; margin-left: 10px; border: none; }
+        .report { background-color: #f2f2f2; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="section" style="border-top: none;"> <!-- Removed border for campaign selection -->
+    <h2>Campaign Report</h2>
+    <label for="campaign-select">Select Campaign:</label>
+    <button onclick="saveCampaign()">Save</button>
+    <select id="campaign-select" onchange="changeCampaign(this)">
+        <!-- Dynamically populate this with JavaScript -->
+    </select>
+    </div>
+    <div class="container">
+        
+        <div class="section">
+            <h3>Categories</h3>
+            <div id="categories">
+                <!-- Categories will be dynamically added here -->
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-category" placeholder="Add new category">
+                <button onclick="addCategory()">Add</button>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Flags</h3>
+            <div id="flags">
+                <!-- Flags will be dynamically added here -->
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-flag" placeholder="Add new flag">
+                <button onclick="addFlag()">Add</button>
+            </div>
+        </div>
+        <div class="section">
+            <h3>Questions</h3>
+            <div id="questions">
+                <!-- Questions will be dynamically added here -->
+            </div>
+            <div class="input-group">
+                <input type="text" id="new-question" placeholder="Add new question">
+                <button onclick="addQuestion()">Add</button>
+            </div>
+        </div>
+        <div class="section report" style="flex-basis: 100%; border-top: none;"> <!-- Adjusted for report section -->
+            
+            <div>
+                <h3>Report Summary</h3>
+                <!-- Display report summary here -->
+                <p>Number of calls processed: <span id="total-calls">0</span></p>
+                <p>Calls by period (last week): <span id="calls-by-period">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    populateCampaignDropdown();
+});
+
+function toggleSubcategoryVisibility(button, subcategoryId) {
+    var subcategoriesDiv = document.getElementById(subcategoryId);
+    if (subcategoriesDiv.style.display === "none") {
+        subcategoriesDiv.style.display = "block";
+        button.textContent = "Hide Subcategories";
+    } else {
+        subcategoriesDiv.style.display = "none";
+        button.textContent = "Show Subcategories";
+    }
+}
+function addCategory() {
+    const categoriesDiv = document.getElementById('categories');
+    const newCategoryName = document.getElementById('new-category').value.trim();
+    if (newCategoryName) {
+        const categoryId = 'category-' + (categoriesDiv.children.length + 1);
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        categoryDiv.innerHTML = `
+            <strong>${newCategoryName}</strong>
+            <button onclick="toggleSubcategoryVisibility(this, '${categoryId}-subcategories')">Show Subcategories</button>
+            <div id="${categoryId}-subcategories" class="subcategory-content">
+                <!-- Subcategories will be dynamically added here -->
+            </div>
+            <div class="input-group">
+                <button onclick="addSubcategory('${categoryId}-subcategories'">Add Subcategory</button>
+            </div>
+        `;
+        categoriesDiv.appendChild(categoryDiv);
+        document.getElementById('new-category').value = ''; // Clear the input after adding
+    }
+}
+
+function addSubcategory(subcategories_div_id) {
+    const subcategoriesDiv = document.getElementById(subcategories_div_id);
+        const subcategoryDiv = document.createElement('div');
+        subcategoryDiv.className = 'subcategory';
+        subcategoryDiv.innerHTML = `
+        <div class="input-group"><input type="text" value="" contenteditable="true"><div class="remove-btn" onclick="this.parentElement.remove()">X</div></div>
+        `;
+        subcategoriesDiv.appendChild(subcategoryDiv);
+        subcategoriesDiv.style.display = 'block'; // Show subcategories when added
+    
+}
+
+
+function removeElement(element, depth) {
+    let targetElement = element;
+    for (let i = 0; i < depth; i++) {
+        if (targetElement.parentElement) {
+            targetElement = targetElement.parentElement;
+        } else {
+            // Break out of the loop if there's no further parent element
+            console.warn("Reached the top of the document before reaching the desired depth.");
+            break;
+        }
+    }
+    // Remove the targeted ancestor element
+    if (targetElement) {
+        targetElement.remove();
+    }
+}
+function addFlag() {
+    const flagsDiv = document.getElementById('flags');
+    const newFlag = document.getElementById('new-flag').value.trim();
+    if (newFlag) {
+        const div = document.createElement('div');
+        div.className = 'input-group';
+        div.innerHTML = `<input type="text" value="${newFlag}" readonly>
+                         <div class="remove-btn" onclick="removeElement(this.parentElement,1)">X</div>`;
+        flagsDiv.appendChild(div);
+        document.getElementById('new-flag').value = ''; // Clear the input after adding
+    }
+}
+
+function addQuestion() {
+    const questionsDiv = document.getElementById('questions');
+    const newQuestion = document.getElementById('new-question').value.trim();
+    if (newQuestion) {
+        const div = document.createElement('div');
+        div.className = 'input-group';
+        div.innerHTML = `<input type="text" value="${newQuestion}" readonly>
+                         <div class="remove-btn" onclick="removeElement(this.parentElement,1)">X</div>`;
+        questionsDiv.appendChild(div);
+        document.getElementById('new-question').value = ''; // Clear the input after adding
+    }
+}
+
+
+function saveCampaign() {
+    const campaign = document.getElementById('campaign-select').value;
+    const categories = [...document.querySelectorAll('.category-group')].map(group => {
+        const categoryName = group.querySelector('input[type="text"]').value;
+        const subcategories = [...group.querySelectorAll('.subcategories input[type="text"]')].map(input => input.value);
+        return { name: categoryName, subcategories: subcategories };
+    });
+    const flags = [...document.getElementById('flags').querySelectorAll('input[type="text"]')].map(input => input.value);
+    const questions = [...document.getElementById('questions').querySelectorAll('input[type="text"]')].map(input => input.value);
+
+    const data = {
+        campaignName: campaign,
+        categories: categories,
+        flags: flags,
+        questions: questions
+    };
+
+    console.log('Saving data:', JSON.stringify(data));
+    fetch('https://us-east1-ai-qa-bot-412819.cloudfunctions.net/process_transcript/admin/' + campaign, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.text())
+    .then(data => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
+}
+
+function populateCampaignDropdown() {
+    // Placeholder for fetching and populating campaign dropdown
+    // Assuming getCampaignList() is an API call or function that retrieves campaigns
+    const campaigns = [<!-- camp options here-->];
+
+    const select = document.getElementById('campaign-select');
+    campaigns.forEach(campaign => {
+        const option = document.createElement('option');
+        option.value = campaign;
+        option.textContent = campaign;
+        if (option.value == ACTIVE_CAMP_REPLACE){
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+}
+function changeCampaign(selectElement) {
+    const selectedCampaignId = selectElement.value;
+    const baseUrl = "https://us-east1-ai-qa-bot-412819.cloudfunctions.net/process_transcript/admin/";
+    window.location.href = baseUrl + selectedCampaignId;
+}
+    </script>
+</body>
+</html>

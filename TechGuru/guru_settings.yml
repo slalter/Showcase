@@ -1,0 +1,8 @@
+assignments_file: assignments.json
+assignments_path: assignments
+features_path: features/
+prompt_py: prompt_classes.py
+prompt_txt_folder_path: prompts
+tools_file: tools/tools.json
+tools_path: tools
+project_dir: /

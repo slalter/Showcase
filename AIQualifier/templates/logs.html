@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Logs 2.0</title>
+</head>
+<body>
+    <ul id="logs">
+        {%for log in logs%}
+            <li><a href = "{{log.href}}">"{{log}}"</a></li>
+        {%endfor%}
+    </ul>
+</body>
+
+</html>

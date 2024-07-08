@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Something has gone wrong!{% endblock %}
+
+{% block content %}
+    <p>An error has occurred. Sorry about that! Please reach out to your representative.</p>
+    {%if is_testing%}
+    <p><pre>{{error}}</pre></p>
+    {%endif%}
+{% endblock %}
+

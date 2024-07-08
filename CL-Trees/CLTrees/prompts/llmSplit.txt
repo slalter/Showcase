@@ -1,0 +1,30 @@
+The task description below describes the current task on a general level.
+
+Your job is to come up with sub-tasks of the current task which encompass the individual_steps below, subject to the following constraints:
+1. The number of sub-tasks you provide must be at least 2 and at most $max_num_subtasks.
+2. All individual_steps must be assigned to a sub-task.
+3. All sub_tasks must have at least one individual_step.
+4. The chronology of the individual_steps must be preserved in your sub_tasks.
+5. Your sub_tasks must be chronological.
+6. You may not use any of the categories already defined in existing_categories.
+7. The union of your substeps, in the order you provide them, MUST be equivalent to the original individual_steps list. You may NOT rearrange the objects.
+8. Do not include the TimeRanges or timestamps in your response.
+Before submitting your answer, think carefully about whether each of the constraints has been satisfied.
+
+task_description: $task_description
+
+individual_steps: $individual_steps
+
+existing_categories: $existing_categories
+
+$DEBUGGING_MODE
+In addition to the fields shown in the json below, also include 'reasoning,' where you describe why you made the choices that you made, challenges that this task included, and recommendations for clearer instructions.
+/$DEBUGGING_MODE
+
+
+respond with a json as follows:
+{
+    (your_substep_name_here):[list of individual_steps assigned to this substep],
+    (your_next_substep_name_here):[list of individual steps assigned to this substep],
+    ... and so on.
+}

@@ -1,0 +1,25 @@
+model: gpt-4-turbo-preview
+call_type: json_response_sync
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+----
+# Write your prompt content here. Use $variable_name to insert variables.
+Based on the objectives and the chat history, determine whether or not ALL objectives have been completed. 
+all_objectives_complete should be true IFF all objectives are complete.
+The 'assistant' is trying to accomplish the objectives in their conversation with the 'user.'
+
+objectives:
+$objectives
+
+history:
+$history
+
+Respond with JSON as follows.
+{
+    "all_objectives_complete": true or false,
+    "explanation": explanation of your conclusion
+}

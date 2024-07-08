@@ -1,0 +1,33 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyyaml = "*"
+python-dotenv = "*"
+sqlalchemy = "*"
+flask = "*"
+pgvector = "*"
+jinja2 = "*"
+psycopg2 = "*"
+ipython = "*"
+cryptography = "*"
+openai = "*"
+requests = "*"
+aiohttp = "*"
+flask-cors = "*"
+alembic = "*"
+flask-socketio = "*"
+celery = "*"
+kombu = "*"
+flower = "*"
+redis = "*"
+stdlib-list = "*"
+networkx = "*"
+matplotlib = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

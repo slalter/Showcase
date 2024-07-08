@@ -1,0 +1,23 @@
+call_type: json_response_sync
+timeout: 180
+----
+Break the given category into 3-6 distinct, disjoint sub-categories with no possibility for overlap.
+
+Here is the category_path. Your new subcategories will each be sub-paths of this path: $category_path
+
+Respond only with the new subcategories, not the entire path.
+
+Here is the purpose of the categorization tree: $directive
+
+These are the elements that are currently in the given category. For each of them, map them to exactly one of your new subcategories. All elements must be mapped to exactly one new subcategory, and none of your subcategories can be empty.
+$elements
+
+
+Respond with a json as follows:
+{
+    "subcategories":{
+        'new_subcategory':[element_ids],
+        'other_subcategory:[other element_ids],
+        ...
+    }
+}

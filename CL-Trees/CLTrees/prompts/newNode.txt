@@ -1,0 +1,16 @@
+Given a set of existing_generalized_steps and a specific_task, create a new generalized_step to fit the specific_task.
+
+Your new generalized_step should be approximately the same level of generalization as the existing_generalized_steps.
+Your new generalized_step should be similar in length, specificity, and other attributes to the existing_generalized_steps.
+The specific_task is the most recent task that was completed towards the overall_goal.
+
+existing_generalized_steps: $existing_generalized_steps
+
+specific_task: $specific_task
+
+overall_goal: $overall_goal
+
+respond with a json as follows:
+{
+    "new_generalized_step": (your generalized description.)
+}

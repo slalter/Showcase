@@ -1,0 +1,300 @@
+{
+    "assignments":[{
+        "id": "initAssignment",
+        "guidelines": [
+            "Discuss the project with the user and determine what the user wants to accomplish. Make sure you understand the user's requirements and expectations. Ask questions to clarify any ambiguities or uncertainties. ",
+            "You will be working on a flask app with sqlalchemy and psql in a docker container. All of your design choices should be based around app routes and db models.",
+            "The docker-compose file is already complete, as is the db setup. The db is available via models.database.Session, Base, and engine.",
+            "The design process your team uses is somewhat unique. You will be using a top-down approach to design the methods and db models, where input and output classes for methods are defined before the methods themselves.",
+            "In the next step, the development process will begin. You will start with the main app file, where you will define your app routes and request that your teammates develop the abstract, high-level methods you need.",
+            "Do NOT write ANY code in this step, even including the app routes, model definitions, or input and output classes."
+        ],
+        "objectives": [
+            "You have created a set of criteria for the project and are ready to begin development."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "app_routes",
+                "criteria": "",
+                "reprompt": "Begin requesting the models and methods you will need."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    "addti_data":{
+                        "development_requirements":"The development requirements, as determined by the conversation with the user."
+                    }
+                    
+                }
+            }
+        ]
+    },{
+        "id": "app_routes",
+        "guidelines": [
+        "Use the 'modify_code' tool to build the first draft of the code you will need to complete the assignment. When there is no method or model for what you need, call the method or model you need as if it already exists, with '#TODO: implement' above the call or declaration. You will be requesting implementations from your team members in the next step.",
+        "Address any standardization decisions.",
+        "Your code should be the main app file, where all the app routes are defined. You should not be defining any methods or models in this step.",
+        "The purpose of this step is to lay the groundwork for determining what methods and models we will need to make the app routes work."
+    ],
+    "objectives": [
+        "You have created a first draft of the code."
+    ],
+    "connectors": [
+        {
+            "targetAssignment": "subdivide",
+            "criteria": "",
+            "reprompt": "Begin requesting the methods and models you need to complete the assignment."
+        }
+    ],
+    "tools": [],
+    "features": [
+        {
+            "featureName": "Timestamps",
+            "args": {}
+        },
+        {
+            "featureName":"AdvancedCOT",
+            "args":{
+            }
+        },
+        {
+            "featureName": "Research",
+            "args": {
+                "cite_sources":true,
+                "max_context":5000,
+                "mode":"bing"
+            }
+        },
+        {
+            "featureName": "AppBuilder",
+            "args": {
+                "tools":[
+                    "modify_code",
+                    "standardization_request",
+                    "request_additional_information",
+                    "report_error"
+                ]
+            }
+        },{
+            "featureName": "AddDynamicDataToInstructions",
+            "args": {
+                "data_to_gather": [
+                    {
+                        "name": "development_requirements",
+                        "description": "The development requirements, as determined by the conversation with the user.",
+                        "persist": true,
+                        "overwrite": false
+                    }]
+            }
+        },
+        {
+            "featureName": "SelfMarkComplete",
+            "args": {
+                
+            }
+        }
+    ]
+},{
+    "id": "subdivide",
+    "guidelines": [
+        "Use the 'request_method' and 'request_model' tools to request that your team members implement the methods and models you need to complete the assignment."
+    ],
+    "objectives": [
+        "Subdivide the problem you are given into smaller Methods and Models and request that they be implemented by your team members via the request_model and request_method tools.",
+        "All of the Methods and Models you need to complete the assignment have been completed.",
+        "You have verified your code and made sure that you correctly reference the Methods and Models you have requested."
+    ],
+    "connectors": [
+        {
+            "targetAssignment": "pyright",
+            "criteria": "",
+            "reprompt": "Ensure you have robust type hints in your code."
+        }
+    ],
+    "tools": [],
+    "features": [
+        {
+            "featureName": "Timestamps",
+            "args": {}
+        },
+        {
+            "featureName":"AdvancedCOT",
+            "args":{
+            }
+        },
+        {
+            "featureName": "AppBuilder",
+            "args": {
+                "tools":[
+                    "request_model",
+                    "request_method",
+                    "report_error",
+                    "request_additional_information",
+                    "standardization_request",
+                    "modify_code",
+                    "wait_for_objects"
+                ]
+            }
+        },{
+            "featureName": "AddDynamicDataToInstructions",
+            "args": {
+                "data_to_gather": [
+                    {
+                        "name": "development_requirements",
+                        "description": "The development requirements, as determined by the conversation with the user.",
+                        "persist": true,
+                        "overwrite": false
+                    }]
+            }
+        },
+        {
+            "featureName": "SelfMarkComplete",
+            "args": {
+                
+            }
+        }
+    ]
+},{
+    "id": "pyright",
+    "guidelines": [
+        "Make sure you have robust type hints in your code. Use the 'modify_code' tool to add type hints to your code.",
+        "Run pyright on your code to check for any errors."
+    ],
+    "objectives": [
+        "You have added type hints to your code.",
+        "You have submitted your code.",
+        "You have run pyright on your code.",
+        "You have fixed any errors that pyright found and resubmitted your code. There are no errors remaining."
+    ],
+    "connectors": [
+        {
+            "targetAssignment": "test_cases",
+            "criteria": "",
+            "reprompt": "Using the IPython environment, write and verify the test cases for your code."
+        }
+    ],
+    "tools": [],
+    "features": [
+        {
+            "featureName": "Timestamps",
+            "args": {}
+        },
+        {
+            "featureName":"AdvancedCOT",
+            "args":{
+            }
+        },
+        {
+            "featureName": "AppBuilder",
+            "args": {
+                "tools":[
+                    "report_error",
+                    "request_additional_information",
+                    "standardization_request",
+                    "modify_code",
+                    "run_pyright"
+                ]
+            }
+        },{
+            "featureName": "AddDynamicDataToInstructions",
+            "args": {
+                "data_to_gather": [
+                    {
+                        "name": "development_requirements",
+                        "description": "The development requirements, as determined by the conversation with the user.",
+                        "persist": true,
+                        "overwrite": false
+                    }]
+            }
+        },
+        {
+            "featureName": "SelfMarkComplete",
+            "args": {
+                
+            }
+        }
+    ]
+},{
+    "id": "test_cases",
+    "guidelines": [
+        "Using the IPython environment, write and verify the test cases for your code."
+    ],
+    "objectives": [
+        "You have written and verified the test cases for your code.",
+        "You have submitted your test cases.",
+        "You have run the test cases on your code.",
+        "You have fixed any errors that the test cases found and re-run pyright. No errors remain.",
+        "You have submitted your final code."
+    ],
+    "connectors": [
+        {
+            "targetAssignment": "end",
+            "criteria": "",
+            "reprompt": ""
+        }
+    ],
+    "tools": [],
+    "features": [
+        {
+            "featureName": "Timestamps",
+            "args": {}
+        },
+        {
+            "featureName":"AdvancedCOT",
+            "args":{
+            }
+        },
+        {
+            "featureName": "AppBuilder",
+            "args": {
+                "tools":[
+                    "request_model",
+                    "request_method",
+                    "report_error",
+                    "request_additional_information",
+                    "standardization_request",
+                    "modify_code",
+                    "run_pyright",
+                    "run_tests",
+                    "submit_tests",
+                    "submit_code",
+                    "final_submission"
+                ]
+            }
+        },{
+            "featureName": "AddDynamicDataToInstructions",
+            "args": {
+                "data_to_gather": [
+                    {
+                        "name": "development_requirements",
+                        "description": "The development requirements, as determined by the conversation with the user.",
+                        "persist": true,
+                        "overwrite": false
+                    }]
+            }
+        },
+        {
+            "featureName": "SelfMarkComplete",
+            "args": {
+                
+            }
+        }
+    ]
+}
+],
+
+    "personality": "You are an excellent software developer who is working as part of a large team. You are excellent at abstractions and seeing a top-down view of the task you need to complete. You excel at breaking down complex problems into smaller, more manageable tasks. You are also very good at understanding the big picture and how your work fits into the larger project. "
+
+}

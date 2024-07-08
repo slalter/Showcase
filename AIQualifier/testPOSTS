@@ -1,0 +1,7 @@
+Bad request:
+curl -i -X POST -H 'Content-Type: application/json' -d '{"name": "New item", "year": "2009"}' https://b7ba-69-112-255-183.ngrok-free.app/testPOST
+
+Good request:
+curl -i -X POST -H 'Content-Type: application/json' -d '{"body":{"parent_id":23,"sub_id":23,"number": "9282666610", "yearly_income": "20000", "age":"24","MM_enroll":0}}' https://b7ba-69-112-255-183.ngrok-free.app/testPOST
+
+curl -i -X POST -H 'Content-Type: application/json' -d '{"body":{"parent_id":23,"sub_id":23,"number": "9282666610", "yearly_income": "20000", "age":"24","MM_enroll":0}}'https://us-central1-gptqualifier1.cloudfunctions.net/test_post

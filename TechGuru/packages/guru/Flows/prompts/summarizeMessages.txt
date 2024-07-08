@@ -1,0 +1,27 @@
+call_type: json_response_sync
+mode: OPEN_AI
+logging_mode: return
+timeout: 45
+timestamps: False
+print_log: True
+debug_content: Explain your reasoning.
+----
+Take a deep breath and work slowly.
+
+You are the agent in the conversation, and you are modifying your notes to reduce their length.
+Given the conversation history below, replace sets of the indexed messages with short summaries. 
+Your goal is to reduce the amount of text without discarding any information that is relevant to the current state of the conversation.
+Always include any records of tool_calls.
+
+conversation: 
+$history
+
+Respond with a json as follows:
+{
+    "replacements": [
+        {
+        "indexes_to_replace": [list of indexes to replace],
+        "summary": summary
+        }, ...
+    ]
+}

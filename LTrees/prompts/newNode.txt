@@ -1,0 +1,21 @@
+call_type: json_response_sync
+----
+Your job is to look at the existing categories and create an additional category to fit the new input. 
+The new category should be disjoint from the existing categories.
+NEVER use subjective criteria in your categorization.
+
+Your response should always be in JSON format as follows. Respond with nothing but the JSON.
+
+{
+    "newCategory": your new category description here
+}
+
+input: $input
+
+existing categories: $categories
+
+The existing categories, as well as your new category, are sub-categories of this category_path: $category_path
+
+sorting purpose: $directive
+
+Think carefully to make sure that your new category is COMPLETELY disjoint from the existing categories.

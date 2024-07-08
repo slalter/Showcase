@@ -1,0 +1,11 @@
+functions-framework==3.*
+flask == 2.3.2
+functions-wrapper==1.0.2
+flask-cors==4.0.0
+setuptools==69.0.3
+google-cloud-secret-manager==2.7.2
+google-cloud-storage==2.14.0
+google-cloud-speech==2.24.1
+google-api-python-client==2.116.0
+python-dotenv==1.0.1
+pinecone-client==3.0.3

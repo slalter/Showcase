@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+<p>Waiting for report...</p>
+<div id="conversation_id">{{conversation_id}}</div>
+<!--forms for pause and resume, sending posts to urlfor pause/conversation_id and resume/conversation_id-->
+<form action="{{url_for('pause', conversation_id=conversation_id)}}" method="post">
+    <button type="submit">Pause</button>
+</form>
+<form action="{{url_for('resume', conversation_id=conversation_id)}}" method="post">
+    <button type="submit">Resume</button>
+</form>
+
+<div id="report">Report will appear here...</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/report.js"></script>
+{% endblock %}-

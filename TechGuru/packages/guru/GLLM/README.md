@@ -1,0 +1,1 @@
+Include the API key in environ variables as OPENAI_KEY

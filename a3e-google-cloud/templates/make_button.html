@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+{% block title %}Button Maker{% endblock %}
+
+{% block content %}
+<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr 1fr; 
+        gap: 10px;
+        align-items: center; /* Align items vertically centered */
+    }
+
+    .form-group {
+        display: contents; /* Use display: contents to span items across columns */
+    }
+
+    .form-group label {
+        grid-column: 2; /* Labels in the first column */
+    }
+
+    .form-group input,
+    .form-group select {
+        grid-column: 3; /* Inputs and selects in the second column */
+    }
+
+    .form-group .switch {
+        grid-column: 4; /* Switch in the third column */
+    }
+
+    .form-group .slider,
+    .form-group .label {
+        grid-column: 4; /* Sliders and labels in the third column */
+    }
+
+    .switch {
+        display: inline-block;
+        position: relative;
+        width: 34px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 34px;
+        transition: 0.4s;
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
+
+    .slider::before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:checked + .slider::before {
+        transform: translateX(14px);
+    }
+
+
+    .column1 {
+        grid-column: 1 / span 1;
+    }
+
+    .column2 {
+        grid-column: 2 / span 1;
+    }
+
+    .column3 {
+        grid-column: 3 / span 1;
+    }
+
+    .column4 {
+        grid-column: 4 / span 1;
+    }
+
+
+
+    
+
+    #generated_url {
+        grid-column: 1 / span 3; /* Generated URL span all columns */
+        margin-top: 10px;
+    }
+</style><div id="inputArea" class="container">
+    <div class="form-group">
+        <label for="proposalNumber">Proposal #:</label>
+        <input type="text" id="proposalNumber" name="proposalNumber">
+        <div>
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitch" onclick="toggleAddressField()">
+            <span class="slider"></span>
+        </label>
+        Create Folders
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price $:</label>
+        <input type="text" id="price" name="price" onblur="formatCurrency(this);">
+    </div>
+
+    <div class="form-group" style="display:none;" id="address-div">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+    </div>
+
+    <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <select id="productName" name="productName">
+            <!-- Assuming this is a Jinja template loop -->
+            {% for option in product_options %}
+                <option value="{{ option }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="paymentDropdown">Payment Methods:</label>
+        <select id="paymentDropdown" name="paymentMethod">
+            <option value="CC_ACH">CC & ACH</option>
+            <option value="ACH">ACH</option>
+            <option value="noPayment">Invoice</option>
+        </select>
+    </div>
+    <br>
+    <button type="button" class="column4" onclick="sendData()">Go!</button>
+
+    <div id="generated_url"></div>
+    <div id="proposal_folder_url" style="display: none;"></div>
+    <div id="upload_folder_url" style="display:none;"></div>
+    <button type="button" class="column1" style="display:none;" onclick="copyButton()">Copy Button</button>
+    <button type="button" class="column1" style="display:none;" onclick="copyUrl()">Copy URL</button>
+    <button type="button" class="column1" style="display:none;" onclick="getProposalFolderURL()">Copy Proposal Folder URL</button>
+    <button type="button" class="column1" style="display:none;" onclick="getUploadURL()">Copy Document Upload URL</button>
+</div>
+<br><br><br>
+<a href="placeholder" id="output" style="display:none; background: none; border: none; color: black; text-decoration: none;">
+    <img src="data:image/jpeg;base64,{{ encoded_image }}" alt="Embedded Image">
+</a>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+     function toggleAddressField() {
+        const addressDiv = document.getElementById('address-div');
+        addressDiv.style.display = addressDiv.style.display === 'none' ? 'contents' : 'none';
+        }
+function stripNonNumeric(input) {
+    return input.replace(/[^0-9.]/g, '');
+
+}
+
+function formatCurrency(input) {
+    let value = parseFloat(input.value);
+    if (!isNaN(value)) {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0
+        });
+        input.value = formatter.format(value);
+    }
+}
+
+function sendData(force_create=false) {
+    const proposalNumber = document.getElementById('proposalNumber').value;
+    const price = stripNonNumeric(document.getElementById('price').value) * 100; // converting dollars to cents
+    const productName = document.getElementById('productName').value;
+    const paymentMethod = document.getElementById('paymentDropdown').value;
+    let address = '';
+    let folders = false;
+    if (document.getElementById('toggleSwitch').checked) {
+        folders = true;
+        address = document.getElementById('address').value;
+    }
+    else {
+        address = '';
+        folders = false;
+    }
+    const jsonPayload = {
+        with_folders: folders,
+        proposalNumber: proposalNumber,
+        price: price,
+        productName: productName,
+        paymentMethod: paymentMethod,
+        force_create:force_create,
+        address: address
+    };
+    //create a progress spinner next to the button
+    document.getElementById('generated_url').innerHTML = 'working...';
+    fetch("{{ backend_url }}", {
+        method: 'POST',
+        body: JSON.stringify(jsonPayload),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        data = JSON.parse(data);
+        if (data.error) {
+            if(data.error == "Duplicate Proposal Number" && force_create == false) {
+                //ask the user if they would like to overwrite. if they say yes, resend the data with force_create=true
+                if(confirm("Proposal Number already has a checkout session. Are you sure you would like to create another?")) {
+                    sendData(force_create=true);
+                    return;
+                }
+                else {
+                    return;
+                }
+            }
+            else {
+                if (data.error == "Duplicate Proposal Number" && force_create == true) {
+                }
+                else {
+                    alert(data.error);
+                    return;
+                }
+        }
+    }
+        url_element = document.getElementById('generated_url')
+        url_element.innerHTML = 'http://start.a3e.com'+data.url
+        document.getElementById('output').href = data.url;
+
+        //if the response has proposal folder and upload folder, set the appropriate fields
+        if (data.proposal_folder_url){
+            document.getElementById('proposal_folder_url').innerHTML = data.proposal_folder_url
+        }
+        if (data.upload_folder_url){
+            document.getElementById('upload_folder_url').innerHTML = data.upload_folder_url
+        }
+        
+        showButtons()
+    })
+    .catch(error => {
+        console.error('Error sending data', error);
+        alert('Error sending data');
+        document.getElementById('generated_url').innerHTML = 'error';
+    }
+    );
+}
+
+function showButtons(){
+    document.getElementsByClassName('column1')[0].style.display = 'block';
+    document.getElementsByClassName('column1')[1].style.display = 'block';
+    if (document.getElementById('proposal_folder_url').innerHTML){
+        document.getElementsByClassName('column1')[2].style.display = 'block';
+    }
+    if (document.getElementById('upload_folder_url').innerHTML){
+        document.getElementsByClassName('column1')[3].style.display = 'block';
+    }
+    //set the go button to say "refresh" instead, and have it refresh the page if clicked.
+    document.getElementsByClassName('column4')[0].innerHTML = 'Refresh';
+    document.getElementsByClassName('column4')[0].onclick = function() {location.reload();}
+}
+
+function copyButton(){
+    output = document.getElementById('output');
+    if(!output.href){
+        alert('No button to copy');
+        return;
+    }
+    output.display = 'block';
+    copyElement(output);
+    output.display = 'none';
+    alert('Button copied to clipboard');
+}
+
+function copyUrl(){
+    url_element = document.getElementById('generated_url')
+    if (!url_element.innerHTML){
+        alert('No URL to copy');
+        return;
+    }
+    copyToClipboard(url_element.innerHTML)
+    alert('URL copied to clipboard');
+}
+
+function getUploadURL(){
+    upload_folder_url = document.getElementById('upload_folder_url')
+    if (!upload_folder_url.innerHTML){
+        alert('No URL to copy');
+        return;
+    }
+    copyToClipboard(upload_folder_url.innerHTML)
+    alert('URL copied to clipboard');
+}
+
+function getProposalFolderURL(){
+    proposal_folder_url = document.getElementById('proposal_folder_url')
+    if (!proposal_folder_url.innerHTML){
+        alert('No URL to copy');
+        return;
+    }
+    copyToClipboard(proposal_folder_url.innerHTML)
+    alert('URL copied to clipboard');
+}
+
+function copyToClipboard(text) {
+    if (!navigator.clipboard) {
+        // Clipboard API not available
+        fallbackCopyTextToClipboard(text);
+        return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+        console.log('Successfully copied to clipboard');
+    }).catch(function(err) {
+        console.error('Error in copying to clipboard: ', err);
+        fallbackCopyTextToClipboard(text);
+    });
+}
+
+function fallbackCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";  // Avoid scrolling to bottom of the page
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+    }
+    document.body.removeChild(textArea);
+}
+
+
+function copyElement(target) {
+    const range = document.createRange();
+    range.setStart(target, 0);
+    range.setEndAfter(target);
+    window.getSelection()?.removeAllRanges();
+    window.getSelection()?.addRange(range);
+    document.execCommand("copy");
+    window.getSelection()?.removeAllRanges();
+}
+
+const addressInput = document.getElementById('address');
+                
+    // Create the autocomplete object
+    const autocomplete = new google.maps.places.Autocomplete(addressInput);
+    
+    // Listen for place selection
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+
+        // Set the value of the input to the formatted address
+        if (place.formatted_address) {
+            addressInput.value = place.formatted_address;
+        } else {
+            console.log('No formatted address found.');
+        }
+    });
+</script>
+
+{% endblock %}

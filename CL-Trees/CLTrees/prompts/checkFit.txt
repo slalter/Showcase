@@ -1,0 +1,16 @@
+Determine whether the input_description belongs in the given step_description. 
+
+input_description:
+$input_description
+
+step_description:
+$step_description
+
+$DEBUGGING_MODE
+In addition to the fields shown in the json below, also include 'reasoning,' where you describe why you made the choices that you made, challenges that this task included, and recommendations for clearer instructions.
+/$DEBUGGING_MODE
+
+Respond with a JSON as follows:
+{
+    fits:true or false
+}

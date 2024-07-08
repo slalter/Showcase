@@ -1,0 +1,10 @@
+Give an example of a job candidate. They should be clearly predisposed to an existing field of some kind. Fill out the JSON below with information about the candidate.
+
+Your response should always be in JSON format as follows. Respond with nothing but the JSON.
+
+{
+    "name": candidate name,
+    "skills": skills here,
+    "experience": experience here,
+    "otherInfo": any other interesting info about the job candidate
+}

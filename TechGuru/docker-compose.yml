@@ -1,0 +1,143 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+      - alembic
+    environment:
+      - CONTAINER_ROLE=web
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - FLASK_APP=app.py
+      - WEB_NAME=web
+      - PORT=5001
+      - REDIS_NAME=redis
+      - ENVIRONMENT=${ENVIRONMENT}
+    networks:
+      - main_network
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      - main_network
+
+  alembic:
+    build:
+      context: .
+      dockerfile: Dockerfile.alembic
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - FLASK_APP=app.py
+      - PORT=5001
+      - WEB_NAME=web
+      - REDIS_NAME=redis
+      - ENVIRONMENT=${ENVIRONMENT}
+      - CONTAINER_ROLE=alembic
+    networks:
+      - main_network
+
+  beat:
+    build: .
+    command: pipenv run celery -A app.celery beat -l info
+    depends_on:
+      - web
+      - redis
+      - db
+      - alembic
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - CONTAINER_ROLE=beat
+      - PORT=5001
+      - WEB_NAME=web
+      - REDIS_NAME=redis
+      - ENVIRONMENT=${ENVIRONMENT}
+    networks:
+      - main_network
+      
+
+  metabase:
+    image: metabase/metabase:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase_data:/metabase-data
+    environment:
+      MB_DB_FILE: "/metabase-data/metabase.db"
+    depends_on:
+      - db
+    networks:
+      - main_network
+    logging:
+      driver: none
+      
+  worker:
+    build: .
+    command: pipenv run celery -A app.celery worker -E --loglevel=info -Q high_priority,medium_priority,low_priority --concurrency=5
+    depends_on:
+      - web
+      - redis
+      - db
+      - alembic
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - CONTAINER_ROLE=worker
+      - PORT=5001
+      - WEB_NAME=web
+      - REDIS_NAME=redis
+      - ENVIRONMENT=${ENVIRONMENT}
+    networks:
+      - main_network
+    
+
+  db:
+    image: pgvector/pgvector:pg16
+    command: ["postgres", "-c", "max_connections=300","-c","shared_buffers=8096MB","-c","work_mem=512MB"]
+    volumes:
+      - /mnt/tech_guru_db/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: techgurudb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - main_network
+
+  flower:
+    build: .
+    command: pipenv run celery --broker=redis://redis:6379/0 flower
+    ports:
+      - 5555:5555
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/techgurudb
+      - CONTAINER_ROLE=flower
+      - PORT=5001
+      - WEB_NAME=web
+      - REDIS_NAME=redis
+      - ENVIRONMENT=${ENVIRONMENT}
+    networks:
+      - main_network
+    depends_on:
+      - web
+      - worker
+      - redis
+volumes:
+  postgres_data:
+  metabase_data:
+  portainer_data:
+
+networks:
+  main_network:
+    driver: bridge
+    name: main_network
+    

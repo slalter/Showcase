@@ -1,0 +1,6 @@
+assignments_path: packages/guru/assignments
+features_py: packages/guru/features.py
+prompt_py: packages/guru/prompt_classes.py
+prompt_txt_folder_path: packages/guru/prompts
+tools_file: packages/guru/tools/tools.json
+tools_path: packages/guru/tools

@@ -1,0 +1,34 @@
+call_type: ex_oai_call_sync
+mode: AZURE
+timeout: 45
+timestamps: False
+print_log: False
+----
+Prompt:
+
+You are working in a system that determines how detailed the context provided to an agent will be. This is done with a tree structure where child nodes contain data that is a subset of their parent node's data, with a higher degree of detail. Your job is to assist in determining when we should use the greater detail from a child node instead of using the parent node.
+
+Task:
+{% if $parent_data %}
+Briefly describe how the child_data differs from the parent_data with respect to the given_topic. Focus on how the child_data provides more specific or detailed information regarding the given_topic. Use the knowledge of the parent_data, but only describe the child_data. Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+{%endif%}
+
+{%if not $parent_data %}
+This is a top-level node without a parent.
+Briefly describe how the data relates to the given_topic. Focus on what information is provided regarding the given_topic. Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+{%endif%}
+
+given_topic:
+{{ $given_topic }}
+
+{%if $parent_data%}
+parent_data:
+{{ $parent_data }}
+
+child_data:
+{{ $child_data }}
+{%endif%}
+{%if not $parent_data %}
+data:
+{{$child_data}}
+{%endif%}

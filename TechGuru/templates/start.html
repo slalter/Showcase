@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+New Project
+{% endblock %}
+
+{% block content %}
+<div class="controls">
+    <button id="start-project-btn">Start New Project</button>
+    <p id="project-info"></p>
+    <p id="conversation-info"></p>
+    <input type="hidden" id="conversation-id" value="">
+    <div id="chat-container">
+        <div id="messages"></div>
+    </div>
+    <input type="text" id="message-input" placeholder="Type your message here...">
+    <button onclick="sendMessage()">Send Message</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('message-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent the default action to avoid form submission
+        sendMessage(); // Call the sendMessage function
+    }
+});
+    document.getElementById('start-project-btn').addEventListener('click', function() {
+        //reset the conversation id, project id, and messages
+        document.getElementById('conversation-id').value = '';
+        document.getElementById('project-info').innerHTML = '';
+        document.getElementById('conversation-info').innerHTML = '';
+        document.getElementById('messages').innerHTML = '';
+
+        socket.emit('json', { request_type: 'start_project', request_id: uuid.v4() });
+    });
+
+    function sendMessage() {
+        var message = document.getElementById('message-input').value;
+        socket.emit('json', {
+            request_type: 'new_message',
+            message: message,
+            conversation_id: document.getElementById('conversation-id').value,
+            request_id: uuid.v4()
+        });
+        addMessage(message, 'user');
+        document.getElementById('message-input').value = '';
+    }
+
+    function addMessage(message, type) {
+        var messagesContainer = document.getElementById('messages');
+        var msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', type === 'user' ? 'user-message' : 'server-message');
+        msgDiv.textContent = message;
+        messagesContainer.appendChild(msgDiv);
+    }
+socket.on('json', function(data) {
+console.log(data)
+if(data.request_type === 'project_started'){
+    document.getElementById('project-info').innerHTML = 'Project ID: ' + data.project_id;
+    addMessage(data.initial_message, 'server');
+    // Button to redirect to the project page
+    var redirectButton = document.createElement('button');
+    redirectButton.innerText = 'Go to Project';
+    redirectButton.onclick = function() {
+        window.open('/project/' + data.project_id, '_blank');
+    };
+    document.getElementById('project-info').appendChild(redirectButton);
+
+    // Button to redirect to the conversation page
+    var redirectButton2 = document.createElement('button');
+    redirectButton2.innerText = 'Go to Conversation Log';
+    redirectButton2.onclick = function() {
+        window.open('/report/' + data.conversation_id, '_blank');
+    };
+    document.getElementById('conversation-info').appendChild(redirectButton2);
+    document.getElementById('conversation-id').value = data.conversation_id;
+}else if(data.request_type === 'message') {
+    log('New message received.')
+    addMessage(data.content, 'server')
+}else if(data.request_type === 'new_conversation') {
+    if(!document.getElementById('conversation-id').value) {
+        document.getElementById('conversation-id').value = data.conversation_id;
+        log('New conversation started with ID: ' + data.conversation_id);
+    }else{
+        log('not starting new conversation, already in one');
+    }
+}
+});
+</script>
+{% endblock %}

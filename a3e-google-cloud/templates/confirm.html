@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Thanks for your purchase!{% endblock %}
+
+{% block content %}
+{% if previously_sent %}
+    <h1>Looks like you already confirmed previously! If you think you have encountered this message in error, please reach out to tim@a3e.com.</h1>
+    
+{% else %}
+    <h1>Thanks for your purchase!</h1>
+    <p> Look for a confirmation email with IMPORTANT next steps.</p>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}

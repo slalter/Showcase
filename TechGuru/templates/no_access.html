@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Permission Denied{% endblock %}
+
+{% block content %}
+    <p>You do not have permission to access that page!</p>
+    <p>Login as a different user? <a href="{{ url_for('login') }}">Login</a></p>
+    <p>Or <a href="{{ url_for('logout') }}">logout</a> and try again.</p>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

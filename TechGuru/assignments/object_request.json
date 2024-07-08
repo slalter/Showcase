@@ -1,0 +1,405 @@
+{
+    "assignments":[{
+        "id": "initAssignment",
+        "guidelines": [
+            "Determine whether you need to implement a new method or model or modify an existing one.",
+            "Use the 'research' tool to find the best way to implement the code you need to write.",
+            "Address any standardization decisions."
+        ],
+        "objectives": [
+            "You have determined whether you need to implement a new method or model or modify an existing one.",
+            "You have addressed any standardization decisions.",
+            "You have researched the best way to implement the code you need to write."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "new_method",
+                "criteria": "The best approach is to make an entirely new method, maybe drawing from existing methods for inspiration, but not overwriting or modifying them.",
+                "reprompt": "Begin making the initial draft of the method or model."
+            },
+            {
+                "targetAssignment": "update_existing_model",
+                "criteria": "The best approach is to modify an existing model in a way that will not break its current usecases by adding to its definition.",
+                "reprompt": "Begin by copying the model's definition into your code via the 'modify_code' tool, then update the model."
+            },
+            {
+                "targetAssignment": "new_model",
+                "criteria": "It is best to make a brand new model."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "Research",
+                "args": {
+                    "cite_sources":false,
+                    "max_context":5000,
+                    "mode":"bing"
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "standardization_request",
+                        "request_additional_information",
+                        "report_error"
+                    ]
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    "with_message": "Send a message telling the team whether you are going to be making a new method or model or modifying an existing one. If you are modifying an existing one, include the name of it and the purpose of your change."
+                }
+            }
+        ]
+    },
+    {
+        "id": "modify_existing_model",
+        "guidelines": [
+            "Use the 'modify_code' tool to modify the existing model in a way that will not break its current usecases by adding to its definition.",
+            "Consider data types, method signatures, and the overall structure of the model, including nullity, default values, and constraints."
+        ],
+        "objectives": [
+            "You have modified the existing model in a way that will not break its current usecases by adding to its definition.",
+            "You have submitted your final code."
+        ],  
+        "connectors": [
+            {
+                "targetAssignment": "end"
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "Research",
+                "args": {
+                    "cite_sources":false,
+                    "max_context":5000,
+                    "mode":"bing"
+                }
+            },
+            {
+                "featureName":"AddDynamicDataToInstructions",
+                "args":{
+                    "data_to_gather":[
+                        {
+                            "name":"object_to_modify",
+                            "description":"the name of the object being modified",
+                            "persist":"true",
+                            "overwrite":"false"
+                        },
+                        {
+                            "name":"object_purpose",
+                            "description":"the purpose of the modification.",
+                            "persist":"true",
+                            "overwrite":"false"
+                        }
+                    ]
+                    }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "modify_code",
+                        "standardization_request",
+                        "request_additional_information",
+                        "report_error",
+                        "final_submission"
+                    ],
+                    "mode":"modify"
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    },{
+        "id": "new_model",
+        "guidelines": [
+            "Use the 'modify_code' tool to build the model you will need to complete the assignment.",
+            "Use the 'research' tool to find the best way to implement the code you need to write. Make sure to cite your sources.",
+            "Address any standardization decisions."
+        ],
+        "objectives": [
+            "You have created the model you need to complete the assignment.",
+            "You have submitted your final code."
+        ],
+        "connectors": [
+            {
+                "targetAssignment":"RAISE EXCEPTION"
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "Research",
+                "args": {
+                    "cite_sources":true,
+                    "max_context":5000,
+                    "mode":"bing"
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "modify_code",
+                        "standardization_request",
+                        "request_additional_information",
+                        "report_error",
+                        "submit_code"
+                    ],
+                    "context_sets":["model"],
+                    "submit_is_final":true
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    },{
+        "id": "new_method",
+        "guidelines": [
+            "Use the 'modify_code' tool to build the first draft of the method -including the definition- you will need to complete the assignment. Use lots of abstraction, worrying about the details later.",
+            "Use the 'research' tool to find the best way to implement the code you need to write. Make sure to cite your sources.",
+            "Address any standardization decisions."
+        ],
+        "objectives": [
+            "You have created a first draft of the code you need to complete the assignment. The next step is implementing the methods and models that are in your first draft. Use the 'modify_code' tool; do NOT include code in your responses directly."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "subdivide_method",
+                "criteria": "",
+                "reprompt": "Begin requesting the methods and models you need to complete the assignment."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "Research",
+                "args": {
+                    "cite_sources":true,
+                    "max_context":5000,
+                    "mode":"bing"
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "modify_code",
+                        "standardization_request",
+                        "request_additional_information",
+                        "report_error"
+                    ]
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    },{
+        "id": "subdivide_method",
+        "guidelines": [
+            "Use the 'request_method' and 'request_model' tools to request that your team members implement the methods and models you need to complete the assignment."
+        ],
+        "objectives": [
+            "Subdivide the problem you are given into smaller Methods and Models and request that they be implemented by your team members via the request_method and request_model tools.",
+            "All of the Methods and Models you need to complete the assignment have been completed."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "pyright",
+                "criteria": "",
+                "reprompt": "Ensure you have robust type hints in your code."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "request_method",
+                        "request_model",
+                        "report_error",
+                        "request_additional_information",
+                        "standardization_request",
+                        "modify_code",
+                        "wait_for_objects"
+                    ]
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    },{
+        "id": "pyright",
+        "guidelines": [
+            "Make sure you have robust type hints in your code. Use the 'modify_code' tool to add type hints to your code.",
+            "We will be using pyright to check your code after this step."
+        ],
+        "objectives": [
+            "You have added type hints to your code.",
+            "You have submitted your code.",
+            "You have run pyright on your code.",
+            "You have fixed any errors that pyright found and resubmitted your code. There are no errors remaining."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "test_cases",
+                "criteria": "",
+                "reprompt": "Using the IPython environment, write and verify the test cases for your code."
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "report_error",
+                        "request_additional_information",
+                        "standardization_request",
+                        "modify_code",
+                        "run_pyright"
+                    ]
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    },{
+        "id": "test_cases",
+        "guidelines": [
+            "Using the IPython environment, write and verify the test cases for your code."
+        ],
+        "objectives": [
+            "You have written and verified the test cases for your code.",
+            "You have submitted your test cases.",
+            "You have run the test cases on your code.",
+            "You have fixed any errors that the test cases found and re-run pyright. No errors remain.",
+            "You have submitted your final code."
+        ],
+        "connectors": [
+            {
+                "targetAssignment": "end",
+                "criteria": "",
+                "reprompt": ""
+            }
+        ],
+        "tools": [],
+        "features": [
+            {
+                "featureName": "Timestamps",
+                "args": {}
+            },
+            {
+                "featureName":"AdvancedCOT",
+                "args":{
+                }
+            },
+            {
+                "featureName": "AppBuilder",
+                "args": {
+                    "tools":[
+                        "request_method",
+                        "request_model",
+                        "report_error",
+                        "request_additional_information",
+                        "standardization_request",
+                        "modify_code",
+                        "run_pyright",
+                        "run_tests",
+                        "submit_tests",
+                        "submit_code",
+                        "final_submission"
+                    ]
+                }
+            },
+            {
+                "featureName": "SelfMarkComplete",
+                "args": {
+                    
+                }
+            }
+        ]
+    }
+    ],
+    "personality": "You are an excellent software developer who is working as part of a large team. You are excellent at abstractions and seeing a top-down view of the task you need to complete. You excel at breaking down complex problems into smaller, more manageable tasks. You are also very good at understanding the big picture and how your work fits into the larger project. "
+}
