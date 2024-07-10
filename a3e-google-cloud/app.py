@@ -295,6 +295,7 @@ def confirm(noPayment=False, button_request_id = None):
     print('confirm recieved', flush=True)
     #TODO: mark that they clicked this in the DB!
     from utils.email import sendEmail, sendInternalNotificationEmail
+    from models import User, ButtonRequest
     data = None
     if request.args['noPayment']:
         noPayment = True
@@ -307,13 +308,13 @@ def confirm(noPayment=False, button_request_id = None):
     data['last_name'] = request.form['last_name']
     with app.app_context():
         user = session.get('user', None)
-        user_model = models.User.find_by_email(user['email'],db)
+        user_model = User.find_by_email(user['email'],db)
         if user_model:
             br = user_model.button_requests[-1]
         else:
             if not button_request_id:
                 return handleError('No button request found.')
-            br = db.session.query(models.ButtonRequest).filter_by(id=button_request_id).first()
+            br = db.session.query(ButtonRequest).filter_by(id=button_request_id).first()
             if not br:
                 return handleError('No button request found.')
         if noPayment:
@@ -330,9 +331,9 @@ def confirm(noPayment=False, button_request_id = None):
                         #this means an error has occurred. email tim.
                         raise Exception("there already is a user_id on this invoice, but no user object!")
                     else:
-                        user_model = models.User.find_by_email(data['email'],db)
+                        user_model = User.find_by_email(data['email'],db)
                         if not user_model:
-                            user_model = models.User(
+                            user_model = User(
                                 first_name = data['first_name'],
                                 last_name = data['last_name'],
                                 email = data['email'],
