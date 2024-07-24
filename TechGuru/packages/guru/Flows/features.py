@@ -372,7 +372,9 @@ class AddDynamicDataToInstructions(Feature):
                 pairs = [x['name'] + ':' + x['description'] for x in self.data_to_gather],
                 history = self.assignment.prevAssignment.getMessages(),
             )  
-            log, response = prompt.execute()
+            response = prompt.execute()
+            log = response.log
+            response = response.get()
             with Session() as session:
                 LLMLog.fromGuruLogObject(log, self.assignment.conversation.id, session)
                 session.commit()
@@ -522,7 +524,9 @@ YOU ARE CONTINUING FROM THE END OF THESE MESSAGES.
             prompt = SummarizeMessagesPrompt(
                 history = self.promptMessages[:-keep_num]
             )
-            log, response = prompt.execute()
+            call = prompt.execute()
+            log = call.log
+            response = call.get()
             LLMLog.fromGuruLogObject(log, self.assignment.conversation.id,session)
             if response.get('replacements', None):
                 self.replace_messages(replacements=response['replacements'])

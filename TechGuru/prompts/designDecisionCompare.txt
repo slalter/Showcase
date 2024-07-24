@@ -1,10 +1,8 @@
-call_type: json_response_sync
-mode: OPEN_AI
-logging_mode: save_to_csv
 timeout: 120
 timestamps: False
 print_log: True
 debug_content: Explain your reasoning.
+json_mode:True
 return_type: dict[dict[str, str]] | dict[str, int]
 ----
 A developer has asked for you to make a standardization decision to standardize the codebase.

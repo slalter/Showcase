@@ -1,13 +1,10 @@
-model: gpt-4-turbo-preview
-call_type: json_response_sync
-mode: OPEN_AI
-logging_mode: return
 timeout: 45
 timestamps: False
 print_log: True
+json_mode: True
 ----
 Based on the conversation provided, extract information according to the following name:description pairs. 
-Pairs: $pairs
-History: $history
+Pairs: {{$pairs}}
+History: {{$history}}
 Respond with a json with keys equal to the provided names and values equal to what you figure out from the history.
 If any of the data does not exist, simply leave it blank. Don't explain yourself.

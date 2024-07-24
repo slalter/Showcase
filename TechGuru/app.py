@@ -117,6 +117,23 @@ def resume(conversation_id):
     return 'Conversation resumed.'
 
 @cross_origin
+@app.route('/zip/<zip_id>')
+def view_zip(zip_id):
+    with Session() as session:
+        zip = session.query(Zip).filter_by(id=zip_id).first()
+        if not zip:
+            return 'Zip not found.'
+        return render_template('zippy/zip_dashboard.html', zip_html = zip.get_html_for_top_k_interactions(session,10))
+
+@cross_origin
+@app.route('/zips/')
+def zips():
+    with Session() as session:
+        zips = session.query(Zip).all()
+        zips_html = [zip.get_html_for_top_k_interactions(session,2) for zip in zips]
+        return render_template('zippy/all_zips.html', zips_html=zips_html)
+
+@cross_origin
 @app.route('/project/<project_id>')
 def builder(project_id):
     with Session() as session:
@@ -133,21 +150,9 @@ def report(conversation_id):
 @cross_origin()
 @app.route('/test')
 def test():
-    from models import Project
-    from packages.utils import recursive_dict
-    from features.appBuilderUtils.dependencyAnalyzer import DependencyAnalyzer
-    def getDisplay(object):
-        d = recursive_dict(object)
-        d['dependencies']= [d.name for d in object.dependencies]
-        return d
-    with Session() as session:
-        da = DependencyAnalyzer('app.py', Session, '6609c9e2-e750-4881-9876-3eb6a54b3f7b')
-        da.analyze()
-        da.build_dependency_digraph(session)
-        digraph:bytes = da.display_dependency_digraph()
-        #return html snippet to display the png
-        import base64
-        return f'<img src="data:image/png;base64,{base64.b64encode(digraph).decode()}"/>'
+    from test import main
+    result = main()
+    return result
 
 
 if __name__ == "__main__":

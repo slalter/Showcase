@@ -13,8 +13,7 @@ TOOL_LIST = [
     'request_additional_information',
     'report_error',
     'final_submission',
-    'get_model_definitions',
-    'update_code'
+    'get_model_definitions'
 ]
 #dynamically import everything in the list
 for tool in TOOL_LIST:

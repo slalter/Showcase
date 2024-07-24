@@ -1,0 +1,27 @@
+json_mode: True
+timeout: 45
+timestamps: False
+print_log: False
+----
+Generate the following based on the seed. 
+
+seed: {{$seed}}
+
+example criteria:
+{'price':'free', 'location':'San Francisco'}
+
+Criteria list should be comprehensive. This often needs to be at least 5 criterion.
+description should be succinct.
+is_providing and is_receiving are optional. 
+
+Respond with a JSON as follows:
+{
+    description: a description of the service/item/etc offered or requested,
+    criteria: {
+        "example_category":"example_value",
+        "other_example_category":"other value,
+        ...
+    },
+    is_providing: [list of strings showing what is being provided],
+    is_seeking: [list of strings showing what is being sought]
+}

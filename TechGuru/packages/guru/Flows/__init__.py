@@ -21,9 +21,14 @@ def initialize():
 
         #if the prompt_txt_folder_path is a single string as opposed to a list...
         if isinstance(prompt_txt_folder_path, str):
-            prompt_txt_folder_path = [{prompt_txt_folder_path:prompts_py_path}]
+            prompt_txt_folder_path = {prompt_txt_folder_path:prompts_py_path}
         # Run prompt loader with the loaded settings
         prompt_loader.runSet(prompt_txt_folder_path)
+
+        #run on internal prompts
+        prompt_loader.runSet({
+            'packages/guru/Flows/prompts': 'packages/guru/Flows/internal_prompts.py'
+        })
 
         # Load features
         print("loading features...")

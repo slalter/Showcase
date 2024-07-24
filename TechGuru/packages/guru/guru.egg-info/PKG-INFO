@@ -3,7 +3,7 @@ Name: guru
 Version: 1.0
 Summary: A short description of your package
 Author: Scott Alter
-Author-email: ''
+Author-email: slalter10@gmail.com
 Requires-Dist: openai>=1.9.0
 Requires-Dist: numpy>=1.26.2
 Requires-Dist: aiohttp>=3.9.5

@@ -117,13 +117,3 @@ def generate_dependency_file(node_name, output_directory='output'):
     dependencies = get_all_dependencies(session, node_name)
     imports = generate_imports(dependencies)
     create_python_file(node_name, imports, output_directory)
-'''
-# Usage
-directory = 'app.py'
-ast_trees = parse_codebase(directory)
-dependencies = extract_dependencies(ast_trees)
-store_dependencies(dependencies)
-
-node_name = 'internal'
-generate_dependency_file(node_name)
-'''

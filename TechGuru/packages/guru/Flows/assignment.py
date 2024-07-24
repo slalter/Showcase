@@ -16,9 +16,8 @@ from models.conversation.db_conversation import addLog
 
 class Assignment:
 
-    def __init__(self, assignmentTemplate, personality, conversation, context = "", instructions = None, prevAssignment = None, popup=None, run = '', conversation_id='', tasks=''):
+    def __init__(self, assignmentTemplate, personality, conversation, context = "", instructions = None, prevAssignment = None, popup=None, conversation_id='', tasks='',run=None, task_description=''):
         from .features import Feature
-        self.run = run
         self.conversation_id = conversation_id
         self.prevAssignment:Assignment = prevAssignment
         self.id = assignmentTemplate['id']
@@ -41,6 +40,8 @@ class Assignment:
         self.nextAssignment = None
         self.prev_response = None
         self.tasks = tasks if tasks else ['loading']
+        self.task_description = task_description
+        self.run=run
 
         for tool in assignmentTemplate['tools']:
             self.tools.append(Tool(toolName=tool, assignment=self))
@@ -155,32 +156,32 @@ class Assignment:
 
         #reset context. Note: context should only be modified on a per-message basis.
         self.resetContext()
-        self.tasks = ['Waiting for OpenAI']
+        self.tasks = ['Waiting for LLM']
         with ThreadPoolExecutor() as executor:
             print(f"running prellm. Features:{[f.featureType for f in self.features]}")
             results = list(executor.map(lambda feature: features.run('preLLM', feature), self.features))
 
-        print("waiting for openai...")
-        log, response = self.getPrompt().execute(messages=self.messages[1:] if len(self.messages)>1 else [], tools=[tool.tool_json for tool in self.tools],run=self.run)
+        print("waiting for LLM...")
+        call = self.getPrompt().execute(messages=self.messages[1:] if len(self.messages)>1 else [], tools=[tool.tool_json for tool in self.tools])
+        log = call.log
+        response = call.get()
         LLMLog.fromGuruLogObject(log,self.conversation_id,session)
         session.commit()
         
-        if not response['choices'][0]['message'].get('content', None):
-            response['choices'][0]['message']['content'] = ''
-        self.messages.append(response['choices'][0]['message'])
-        self.prev_response = response
+        if not response:
+            response = ''
+        self.messages.append({"role":"assistant", "content":response})
+        self.prev_response = call.response
         
-        #if tool calls, set tasks accordingly.
-        if 'tool_calls' in response['choices'][0]['message']:
-            tool_calls = response['choices'][0]['message']['tool_calls']
-            self.tasks = [tool['function']['name'] for tool in tool_calls]
+        
         print("running postllm.")
         with ThreadPoolExecutor() as executor:
             results = list(executor.map(lambda feature: features.run('postLLM', feature), self.features))
         
-
-        if 'tool_calls' in response['choices'][0]['message']:
-            tool_calls = response['choices'][0]['message']['tool_calls']
+#if tool calls, set tasks accordingly.
+        tool_calls = call.tool_calls
+        if tool_calls:
+            self.tasks = [tool['function']['name'] for tool in tool_calls]
             fake_tool_calls = [tool for tool in tool_calls if tool['function']['name'] not in [tool.toolName for tool in self.tools]]
             if fake_tool_calls:
                 #remove tool calls, kick back to LLM
@@ -191,12 +192,15 @@ class Assignment:
                 tool_calls = [tool for tool in tool_calls if tool['function']['name'] in [tool.toolName for tool in self.tools]]
                 if tool_calls:
                     messages_to_add = []
-                    if response['choices'][0]['message'].get('content', None):
-                        self.displayResponse(session,response['choices'][0]['message']['content'])
+                    if response:
+                        self.displayResponse(session,response)
                     print(f"{len(tool_calls)} tools detected.")
-                    
+                    print(f"running tools: {tool_calls}")
+                    for tool_call in tool_calls:
+                        if not isinstance(tool_call['function']['arguments'],dict):
+                            tool_call['function']['arguments'] = json.loads(tool_call['function']['arguments'])
                     with ThreadPoolExecutor() as executor:
-                        tool_results = list(executor.map(lambda tool_call: self.runTool(tool_call['function']['name'], json.loads(tool_call['function']['arguments']), tool_call_id = tool_call['id']), tool_calls))
+                        tool_results = list(executor.map(lambda tool_call: self.runTool(tool_call['function']['name'], tool_call['function']['arguments'], tool_call_id = tool_call['id']), tool_calls))
 
                     for tool_call, tool_result in zip(tool_calls, tool_results):
                         if tool_result == '!EXTERNAL_TOOL':
@@ -216,7 +220,7 @@ class Assignment:
                             #if there are multiple tool calls, only remove this one! if there is only one, check if there is content as well. If not, remove the entire message.
                             if len(tool_calls) == 1:
                                 #check for content.
-                                if not response['choices'][0]['message'].get('content', None):
+                                if not response:
                                     self.messages.pop()
                             else:
                                 #modify the message itself, removing just the tool call.
@@ -244,7 +248,7 @@ class Assignment:
                 results = list(executor.map(lambda feature: features.run('postTool', feature), self.features))
             if not complete:
                 return self.getLLMResponse(session)
-        response = self.prev_response['choices'][0]['message']['content']
+        response = self.prev_response.response
         
         
         print("displaying response.")
@@ -313,7 +317,9 @@ class Assignment:
         prompt = NextAssignmentPrompt(
             conditions= str(conditions),
             conversation=self.getMessages())
-        log, response = prompt.execute()
+        call = prompt.execute()
+        log = call.log
+        response = call.get()
         with session:
             LLMLog.fromGuruLogObject(log,self.conversation_id,session)
             session.commit()
@@ -371,7 +377,8 @@ class Assignment:
             personality=self.personality,
             guidelines=self.guidelines,
             objectives=self.objectives,
-            context=self.context
+            context=self.context,
+            task_description=self.task_description
         )
     #this is so that features which modify how messages are stored can more easily be used to make current message state.
     def getMessages(self):

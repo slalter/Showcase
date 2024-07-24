@@ -22,25 +22,20 @@ from features.context_sets.context_sets import getContext
 class AppBuilder(Feature):
     def __init__(self, 
                  assignment, 
-                 project_id = None, 
-                 object_request_id = None,
+                 project_id, 
+                 object_request_id,
                  tools= None,
                  max_context_length = 10000,
                  semantic_threshold = 0.9,
                  context_sets = None,
                  submit_is_final=False,
-                 mode = 'default',
-                 file_path = None) -> None:
-        if not file_path and not (project_id and object_request_id):
-            raise Exception('Either file_path or project_id and object_request_id must be provided')
+                 mode = 'default') -> None:
         super().__init__(assignment,self.__class__.__name__)
         self.max_context_length = max_context_length
         self.semantic_threshold = semantic_threshold
         self.context_sets = context_sets
         self.submit_is_final = submit_is_final
         self.mode = mode
-        self.file_path = file_path
-
         #semantically similar objects
         self.visible_method_ids_s = []
         self.visible_model_ids_s = []
@@ -63,10 +58,6 @@ class AppBuilder(Feature):
         self.object_request_ids = []
         if self.mode == 'test':
             self.create_test_object()
-        if self.file_path:
-            with open(self.file_path, 'r') as f:
-                self.code = f.read()
-
         for tool in tools:
             if tool not in TOOL_LIST:
                 raise Exception(f"Tool {tool} not in TOOL_LIST")
@@ -104,13 +95,6 @@ class AppBuilder(Feature):
 
 
     def preAssignment(self):
-        self.assignment.addInstructions("You do NOT need to include any of the actual code in messages to the user. The user will be able to see your tool calls, your current code, your object requests, and everything else via a nice ui.")
-        self.assignment.addInstructions("the only way you can update your code is via tools. Simply having the code in your message will not update the code.")
-
-
-        if self.file_path:
-            return
-
         from models import ObjectRequest
         #get the main object request's description.
         with Session() as session:
@@ -140,6 +124,7 @@ example_io_pairs: {main_or.io_pair.example_pairs}
             if self.main_object_request_id != 'MAIN':
                 self.assignment.addInstructions("You should not be sending messages unless directly requested in the prompt. Interact only with your tools - some of which may send a message to the user or a coworker, as described.")
 
+            self.assignment.addInstructions("You do NOT need to include any of the actual code in messages to the user. The user will be able to see your tool calls, your current code, your object requests, and everything else via a nice ui.")
 
         #fill context with:
         #method requests + statuses
@@ -152,16 +137,6 @@ example_io_pairs: {main_or.io_pair.example_pairs}
         pass
 
     def preLLM(self):
-        if self.file_path:
-            lines = self.code.split('\n')
-            numbered_code = '\n'.join([str(i+1) + ': ' + line for i, line in enumerate(lines)])
-            self.assignment.addContext(f'''
-------YOUR CODE SO FAR-------
-{numbered_code}
-------END CODE-------'''
-            )
-            return
-        
         with Session() as session:
             self.refreshContextDict(session)
         self.assignment.addContext(json.dumps(self.context_dict))
@@ -170,15 +145,11 @@ example_io_pairs: {main_or.io_pair.example_pairs}
     ------YOUR TASK-------
     {self.assigned_object_request_string}
     ------END TASK-------'''     )
-            
-        lines = self.code.split('\n')
-        numbered_code = '\n'.join([str(i+1) + ': ' + line for i, line in enumerate(lines)])
         self.assignment.addContext(f'''
 ------YOUR CODE SO FAR-------
-{numbered_code}
+{self.code}
 ------END CODE-------'''
 )                                   
-
 
     def postLLM(self):
         pass
@@ -257,13 +228,11 @@ example_io_pairs: {main_or.io_pair.example_pairs}
             project = session.query(Project).filter(Project.id == self.project_id).first()
             project.code = self.code
             session.commit()
-        elif self.main_object_request_id:
+        else:
             #save to the object request
             object_request = session.query(ObjectRequest).filter(ObjectRequest.id == self.main_object_request_id).first()
             object_request.code = self.code
             session.commit()
-        else:
-            return 
 
 
 
@@ -306,11 +275,9 @@ example_io_pairs: {main_or.io_pair.example_pairs}
             if not project:
                 raise Exception(f'Project {self.project_id} not found.')
             project.addLog(message, data, session)
-        elif self.main_object_request_id:
+        else:
             main_object_request = session.query(ObjectRequest).filter(ObjectRequest.id == self.main_object_request_id).first()
             main_object_request.addLog(message, data, session)
-        else:
-            addLog(self.assignment.conversation_id, message, data, session)
         session.commit()
 
     def createTestObject(self):

@@ -8,10 +8,15 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
     python3-dev \
+    nodejs \
+    npm \
     # Pipenv for managing dependencies
     && pip install pipenv
 
-
+RUN npm install pyright -g
+RUN pip install pyright
+    
+    
 #copy over the pipfile and piplock
 COPY Pipfile Pipfile.lock /app/
 

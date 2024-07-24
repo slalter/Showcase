@@ -1,10 +1,8 @@
-call_type: json_response_sync
-mode: OPEN_AI
-logging_mode: save_to_csv
 timeout: 120
 timestamps: False
 print_log: True
 debug_content: Explain your reasoning.
+json_mode=True
 return_type: dict[str, list[int]]
 ----
 A new {{ $object_type }} has been requested, but first we need to make sure we aren't rebuilding something we already have.

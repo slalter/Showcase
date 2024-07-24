@@ -62,12 +62,14 @@ class DCOSemanticNamespace(Base, LoggableMixin):
                     child_data = child_node.getData(),
                     given_topic = self.embedding_column
                 )
-                log, result = prompt.execute()
+                call = prompt.execute()
+                log = call.log
+                result = call.get()
                 self.add_llm_log(log, session)
-                embedding = LLM.getEmbedding(result['choices'][0]['message']['content'])
+                embedding = LLM.getEmbedding(result)
                 vector = DCOVector(
                     namespace_id = self.id,
-                    summary = result['choices'][0]['message']['content'],
+                    summary = result,
                     embedding = embedding,
                     node=child_node
                 )
@@ -318,7 +320,7 @@ class DynamicContextObject(Base, DCOVectorMixin, LoggableMixin):
         with ThreadPoolExecutor(max_workers=10) as executor:
             new_context = {}
             for namespace_id in to_summarize:
-                future = executor.submit(namespace.getRelativeContextSummary, context, namespace_id)
+                future = executor.submit(self.getRelativeContextSummary, context, namespace_id)
                 try:
                     result = future.result()
                     if future.exception():
@@ -347,6 +349,8 @@ class DynamicContextObject(Base, DCOVectorMixin, LoggableMixin):
                 final_score += namespace.weight*scores[namespace.id][node.id]
             final_scores[node.id] = final_score
 
+        #build the text
+
     def getRelativeContextSummary(self, context, namespace_id):
         '''
         Returns the summarized context relative to the embedding_column in the namespace.
@@ -361,9 +365,11 @@ class DynamicContextObject(Base, DCOVectorMixin, LoggableMixin):
                     given_topic = namespace.embedding_column,
                     object_description = self.description
                 )
-                log, result = prompt.execute()
+                call = prompt.execute()
+                log = call.log
+                result = call.get()
                 namespace.add_llm_log(log, session)
-                return result['choices'][0]['message']['content']
+                return result
             except Exception as e:
                 session.rollback()
                 namespace.addLog(f'Error: {e}','',session)

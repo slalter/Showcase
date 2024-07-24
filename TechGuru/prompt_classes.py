@@ -1,18 +1,107 @@
+
 from jinja2 import Environment, Template
 import os
 from datetime import datetime
-from packages.guru.GLLM import LLM
 from packages.guru.GLLM.log import Log
-from typing import Any
+from packages.guru.GLLM.models import OpenAIModel, AzureOpenAIModel, AnthropicModel, LLMCall
+
+class ZipExamplePrompt:
+    def __init__(self, seed):
+        self.seed = seed
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 45, 'print_log': False, 'json_mode': True, 'timestamps': False, 'return_type': 'Any'}
+        env = Environment()
+        self.template = env.from_string('''
+Generate the following based on the seed. 
+
+seed: {{seed}}
+
+example criteria:
+{'price':'free', 'location':'San Francisco'}
+
+Criteria list should be comprehensive. This often needs to be at least 5 criterion.
+description should be succinct.
+is_providing and is_receiving are optional. 
+
+Respond with a JSON as follows:
+{
+    description: a description of the service/item/etc offered or requested,
+    criteria: {
+        "example_category":"example_value",
+        "other_example_category":"other value,
+        ...
+    },
+    is_providing: [list of strings showing what is being provided],
+    is_seeking: [list of strings showing what is being sought]
+}''')
+    def get(self):
+        content = self.template.render(**self.__dict__)
+        if self.params['timestamps']:
+             content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
+        return content
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
+        if print_log:
+             self.params['print_log'] = print_log
+        content = self.get()
+        if model:
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
+        return result
+
+
+class GetRelativeContextSummaryPrompt:
+    def __init__(self, given_topic, context, object_summary):
+        self.given_topic = given_topic
+        self.context = context
+        self.object_summary = object_summary
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 45, 'print_log': False, 'json_mode': False, 'timestamps': False, 'return_type': 'Any'}
+        env = Environment()
+        self.template = env.from_string('''
+Create a description of how parts of the object described in object_summary might be useful in the given context.
+Constrain your response to only consider the given_topic.
+Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+
+given_topic:
+{{given_topic}}
+
+context:
+{{context}}
+
+object_summary:
+{{object_summary}}''')
+    def get(self):
+        content = self.template.render(**self.__dict__)
+        if self.params['timestamps']:
+             content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
+        return content
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
+        if print_log:
+             self.params['print_log'] = print_log
+        content = self.get()
+        if model:
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
+        return result
+
+
 class DesignDecisionComparePrompt:
-    def __init__(self, description, relevant_for_list, matches, stack_description):
+    def __init__(self, description, relevant_for_list, stack_description, matches):
         self.description = description
         self.relevant_for_list = relevant_for_list
-        self.matches = matches
         self.stack_description = stack_description
-        self.debug_content = '''Explain your reasoning.'''
-        self.print_log = True
-        self.timestamps = False
+        self.matches = matches
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 120, 'print_log': True, 'json_mode': True, 'timestamps': False, 'return_type': 'dict[dict[str, str]] | dict[str, int]'}
         env = Environment()
         self.template = env.from_string('''
 A developer has asked for you to make a standardization decision to standardize the codebase.
@@ -47,37 +136,33 @@ Respond with a json as follows. Include one of, but not both, new_standardizatio
 }''')
     def get(self):
         content = self.template.render(**self.__dict__)
-        if self.timestamps:
+        if self.params['timestamps']:
              content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
-        if os.environ.get('debug', None):
-             content = content + '\n' + self.debug_content
         return content
-    def execute(self, logging_mode="save_to_csv", print_log=None, tools=[], messages=[], run=None, model=None, mode=None) -> tuple[Log, dict[dict[str, str]] | dict[str, int]]:
-        mode = mode if mode else "OPEN_AI"
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
         if print_log:
-             self.print_log = print_log
+             self.params['print_log'] = print_log
         content = self.get()
         if model:
-             result = LLM.json_response_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, model=model, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=120, print_log=self.print_log, tools=tools)
-        else:
-             result = LLM.json_response_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=120, print_log=self.print_log, tools=tools)
-        if os.environ.get('debug', None):
-             if result[1].get('reasoning', None):
-                 print(f'reasoning for {self.__class__.__name__}: {result[1].get("reasoning")}')
-                 del(result[1]['reasoning'])
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
         return result
 
 
 class CompareCodeObjectPrompt:
-    def __init__(self, object_type, requested_method_output, requested_method_input, matches, requested_method_description):
-        self.object_type = object_type
-        self.requested_method_output = requested_method_output
-        self.requested_method_input = requested_method_input
-        self.matches = matches
+    def __init__(self, requested_method_description, matches, requested_method_input, requested_method_output, object_type):
         self.requested_method_description = requested_method_description
-        self.debug_content = '''Explain your reasoning.'''
-        self.print_log = True
-        self.timestamps = False
+        self.matches = matches
+        self.requested_method_input = requested_method_input
+        self.requested_method_output = requested_method_output
+        self.object_type = object_type
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 120, 'print_log': True, 'json_mode': False, 'timestamps': False, 'return_type': 'dict[str, list[int]]'}
         env = Environment()
         self.template = env.from_string('''
 A new {{object_type}} has been requested, but first we need to make sure we aren't rebuilding something we already have.
@@ -106,24 +191,79 @@ Respond with a json as follows:
 }''')
     def get(self):
         content = self.template.render(**self.__dict__)
-        if self.timestamps:
+        if self.params['timestamps']:
              content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
-        if os.environ.get('debug', None):
-             content = content + '\n' + self.debug_content
         return content
-    def execute(self, logging_mode="save_to_csv", print_log=None, tools=[], messages=[], run=None, model=None, mode=None) -> tuple[Log, dict[str, list[int]]]:
-        mode = mode if mode else "OPEN_AI"
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
         if print_log:
-             self.print_log = print_log
+             self.params['print_log'] = print_log
         content = self.get()
         if model:
-             result = LLM.json_response_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, model=model, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=120, print_log=self.print_log, tools=tools)
-        else:
-             result = LLM.json_response_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=120, print_log=self.print_log, tools=tools)
-        if os.environ.get('debug', None):
-             if result[1].get('reasoning', None):
-                 print(f'reasoning for {self.__class__.__name__}: {result[1].get("reasoning")}')
-                 del(result[1]['reasoning'])
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
+        return result
+
+
+class SummarizeForDCOVectorPrompt:
+    def __init__(self, child_data, parent_data, given_topic):
+        self.child_data = child_data
+        self.parent_data = parent_data
+        self.given_topic = given_topic
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 45, 'print_log': False, 'json_mode': False, 'timestamps': False, 'return_type': 'Any'}
+        env = Environment()
+        self.template = env.from_string('''
+Prompt:
+
+You are working in a system that determines how detailed the context provided to an agent will be. This is done with a tree structure where child nodes contain data that is a subset of their parent node's data, with a higher degree of detail. Your job is to assist in determining when we should use the greater detail from a child node instead of using the parent node.
+
+Task:
+{%if parent_data%}
+Briefly describe how the child_data differs from the parent_data with respect to the given_topic. Focus on how the child_data provides more specific or detailed information regarding the given_topic. Use the knowledge of the parent_data, but only describe the child_data. Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+{%endif%}
+
+{%if not parent_data%}
+This is a top-level node without a parent.
+Briefly describe how the data relates to the given_topic. Focus on what information is provided regarding the given_topic. Avoid unnecessary words or phrases, maintaining a high density of meaningful words.
+{%endif%}
+
+given_topic:
+{{given_topic}}
+
+{%if parent_data%}
+parent_data:
+{{parent_data}}
+
+child_data:
+{{child_data}}
+{%endif%}
+{%if not parent_data%}
+data:
+{{child_data}}
+{%endif%}''')
+    def get(self):
+        content = self.template.render(**self.__dict__)
+        if self.params['timestamps']:
+             content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
+        return content
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
+        if print_log:
+             self.params['print_log'] = print_log
+        content = self.get()
+        if model:
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
         return result
 
 
@@ -131,9 +271,7 @@ class DescribeObjectPrompt:
     def __init__(self, object_data, object_type):
         self.object_data = object_data
         self.object_type = object_type
-        self.debug_content = ''''''
-        self.print_log = False
-        self.timestamps = False
+        self.params = {'provider': 'anthropic', 'model': 'sonnet35', 'description': '', 'timeout': 45, 'print_log': False, 'json_mode': False, 'timestamps': False, 'return_type': 'Any'}
         env = Environment()
         self.template = env.from_string('''
 You are working as part of an automated coding system. Your goal is to describe the following {{object_type}} in a way that is likely to make it appear in semantic similarity searches when agents are trying to find existing code objects while building new code or modifying existing code.
@@ -142,22 +280,20 @@ In general, don't respond with actual code - instead, describe the object and it
 {{object_data}}''')
     def get(self):
         content = self.template.render(**self.__dict__)
-        if self.timestamps:
+        if self.params['timestamps']:
              content = 'current utcnow isoformat: ' + datetime.utcnow().isoformat() + '\n' + content
-        if os.environ.get('debug', None):
-             content = content + '\n' + self.debug_content
         return content
-    def execute(self, logging_mode=None, print_log=None, tools=[], messages=[], run=None, model=None, mode=None) -> tuple[Log, Any]:
-        mode = mode if mode else "AZURE"
+    def execute(self, print_log=None, tools=[], messages=[], model=None) -> LLMCall:
         if print_log:
-             self.print_log = print_log
+             self.params['print_log'] = print_log
         content = self.get()
         if model:
-             result = LLM.ex_oai_call_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, model=model, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=45, print_log=self.print_log, tools=tools)
-        else:
-             result = LLM.ex_oai_call_sync(prompt=LLM.cleanStringForLLM(content), messages=messages, run=None, request_type=self.__class__.__name__, mode=mode, logging_mode=logging_mode, timeout=45, print_log=self.print_log, tools=tools)
-        if os.environ.get('debug', None):
-             if result[1].get('reasoning', None):
-                 print(f'reasoning for {self.__class__.__name__}: {result[1].get("reasoning")}')
-                 del(result[1]['reasoning'])
+             self.params['model'] = model
+        if self.params['provider'] == 'openai':
+             model_instance = OpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'azureopenai':
+             model_instance = AzureOpenAIModel(self.params['model'], self.params['timeout'])
+        elif self.params['provider'] == 'anthropic':
+             model_instance = AnthropicModel(self.params['model'], self.params['timeout'])
+        result = model_instance.execute(messages=messages, prompt=content, temp=0.5, tools=tools, description=self.__class__.__name__, print_log=self.params['print_log'], json_mode=self.params['json_mode'])
         return result

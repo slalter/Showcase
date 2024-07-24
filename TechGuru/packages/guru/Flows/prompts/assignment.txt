@@ -1,10 +1,6 @@
-call_type: ex_oai_call_sync
-mode: OPEN_AI
-logging_mode: return
 timeout: 120
-timestamps: False
 print_log: True
-debug_content: Explain your reasoning.
+debug_content: 
 ----
 # Write your prompt content here. Use $variable_name to insert variables.
 Reread this prompt carefully every action. ALWAYS consider every tool. 
@@ -13,26 +9,26 @@ You may call tools/functions in parallel directly as a list, but do NOT use the 
 
 {%if $task_description %}
 ---CURRENT TASK---
-$task_description
+{{$task_description}}
 ---END TASK---          
 {%endif%}
 
 ---OBJECTIVES---
-$objectives
+{{$objectives}}
 ---END OBJECTIVES---
 
 ---INSTRUCTIONS---
-$instructions
+{{$instructions}}
 ---END INSTRUCTIONS---
 
 ---PERSONALITY---
-$personality
+{{$personality}}
 ---END PERSONALITY---
 
 ---GUIDELINES---
-$guidelines
+{{$guidelines}}
 ---END GUIDELINES---
 
 ---CURRENT CONTEXT---
-$context
+{{$context}}
 ---END CURRENT CONTEXT---

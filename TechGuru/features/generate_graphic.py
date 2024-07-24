@@ -232,7 +232,7 @@ def getAssistant():
     from openai import OpenAI
 
     client = OpenAI(
-        api_key="",
+        api_key=os.environ.get('OPENAI_KEY'),
         timeout=40,
         max_retries=0
     )
@@ -248,7 +248,7 @@ def remakeAssistant():
     from openai import OpenAI
 
     client = OpenAI(
-        api_key="",
+        api_key=os.environ.get('OPENAI_KEY'),
         timeout=40,
         max_retries=0
     )

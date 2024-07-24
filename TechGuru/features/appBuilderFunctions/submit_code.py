@@ -3,17 +3,11 @@ def execute(args, tool_call_id, session, feature_instance):
     submits code.
     '''
     pypi_packages = args['required_pypi_packages']
-    code = feature_instance.code
-
-    if feature_instance.file_path:
-        with open(feature_instance.file_path, 'w') as f:
-            f.write(code)
-        return 'code submitted'
-
     from models import Model, Method, ObjectRequest
     #create the CodeObject.
     object_request = feature_instance.main_object_request
     object_requests:list[ObjectRequest] = feature_instance.getObjectRequests(session)
+    code = feature_instance.code
     used_object_requests = [object_request for object_request in object_requests if object_request.name in code]
     if any([object_request.status != 'fulfilled' for object_request in used_object_requests]):
         raise Exception('You cannot submit code until all dependencies have been completed. We are still waiting for the following object requests to be fulfilled: ' + ', '.join([object_request.name for object_request in used_object_requests if object_request.status != 'fulfilled']))

@@ -1,0 +1,1796 @@
+[
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:04",
+                "Request Tokens Used": 158,
+                "Response Tokens Used": 188,
+                "Total Tokens Used": 346,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nNum Examples: ${num_examples}\nSeeds: ${seeds}. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nNum Examples: 30\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01LNdvPiof4vqR5AjSEVugYh",
+                    "content": [
+                        {
+                            "text": " food, friendship, goods\n\nHere is the response in the requested JSON format:\n\n{\n  \"value\": [\n    \"food\",\n    \"friendship\",\n    \"goods\",\n    \"services\",\n    \"housing\",\n    \"transportation\",\n    \"education\",\n    \"entertainment\",\n    \"healthcare\",\n    \"employment\",\n    \"advice\",\n    \"skills\",\n    \"tools\",\n    \"information\",\n    \"support\",\n    \"companionship\",\n    \"mentorship\",\n    \"resources\",\n    \"experiences\",\n    \"knowledge\",\n    \"assistance\",\n    \"guidance\",\n    \"opportunities\",\n    \"connections\",\n    \"community\",\n    \"hobbies\",\n    \"activities\",\n    \"volunteering\",\n    \"collaboration\",\n    \"inspiration\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 158,
+                        "output_tokens": 188
+                    }
+                },
+                "Cost": 0.001038,
+                "Elapsed Time": 3.000812,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001038
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:05",
+                "Request Tokens Used": 101,
+                "Response Tokens Used": 10,
+                "Total Tokens Used": 111,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nJson Schema: ${json_schema}\nJson Object: ${json_object}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nJson Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\nJson Object:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_018P8cf1SqHK17TGXmNmdSsb",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\"example\"]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 101,
+                        "output_tokens": 10
+                    }
+                },
+                "Cost": 0.00033299999999999996,
+                "Elapsed Time": 0.606218,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00033299999999999996
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:07",
+                "Request Tokens Used": 208,
+                "Response Tokens Used": 100,
+                "Total Tokens Used": 308,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nNum Examples: ${num_examples}\n\nPast Error in Seeds: An error to avoid in the future\n\nSeeds:\n${seeds}. For seeds,Respond with a single JSON object. \nYou MUST use this format: {\"value\": [\"example\"]}\nJSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nNum Examples: 30\n\nPast Error in Seeds: ValueError('json output should start and end with { and }')\n\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01ANmhmrSFtCwFpfMJfVH9RV",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\"food\", \"friendship\", \"goods\", \"services\", \"housing\", \"transportation\", \"education\", \"healthcare\", \"entertainment\", \"employment\", \"advice\", \"skills\", \"tools\", \"information\", \"support\", \"community\", \"resources\", \"experiences\", \"opportunities\", \"mentorship\", \"assistance\", \"companionship\", \"guidance\", \"collaboration\", \"knowledge\", \"inspiration\", \"connections\", \"solutions\", \"ideas\", \"motivation\"]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 208,
+                        "output_tokens": 100
+                    }
+                },
+                "Cost": 0.0009239999999999999,
+                "Elapsed Time": 1.491424,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009239999999999999
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:09",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 111,
+                "Total Tokens Used": 290,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: goods\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Xhvg7JvTdBm2FZ1b6U9Qd2",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Vintage 1960s Gibson Les Paul guitar\",\n    \"Fresh organic produce\",\n    \"Gently used children's clothing\",\n    \"Handcrafted wooden furniture\",\n    \"Rare first edition books\",\n    \"stuff\",\n    \"High-end gaming PC components\",\n    \"Eco-friendly cleaning products\",\n    \"Antique pocket watches\",\n    \"Free cardboard boxes for moving\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 111
+                    }
+                },
+                "Cost": 0.0008700000000000001,
+                "Elapsed Time": 2.15811,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0008700000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:09",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 118,
+                "Total Tokens Used": 297,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: resources\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01XujCpC4SXEXTTkasZBHZUX",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a study buddy for calculus\",\n    \"Offering free guitar lessons\",\n    \"Need help moving a couch\",\n    \"Seeking carpool to downtown\",\n    \"Selling gently used textbooks\",\n    \"ISO: Vintage record player\",\n    \"Can teach basic coding skills\",\n    \"Wanted: Tennis partner\",\n    \"Free kittens to good home\",\n    \"Seeking recommendations for a reliable mechanic\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 118
+                    }
+                },
+                "Cost": 0.000891,
+                "Elapsed Time": 2.175889,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000891
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:09",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 122,
+                "Total Tokens Used": 301,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: community\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01NW8KQznMWYtcH3Kobr6CP5",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a knitting circle\",\n    \"Offering free math tutoring\",\n    \"Seeking fellow birdwatchers\",\n    \"Want to start a neighborhood watch\",\n    \"Organizing a beach cleanup\",\n    \"Need recommendations for local book clubs\",\n    \"Offering carpentry lessons\",\n    \"Seeking participants for a community garden\",\n    \"Want to join a local D&D group\",\n    \"Looking for volunteers to help at the animal shelter\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 122
+                    }
+                },
+                "Cost": 0.000903,
+                "Elapsed Time": 2.282746,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000903
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:09",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 125,
+                "Total Tokens Used": 304,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: advice\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Y537eToWTYgUjCWXt9JcND",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Need advice on starting a small business\",\n    \"Offering career counseling for recent graduates\",\n    \"Seeking relationship advice from experienced couples\",\n    \"Free financial planning tips available\",\n    \"Looking for guidance on home gardening\",\n    \"Experienced teacher offering homework help\",\n    \"Want advice on adopting a pet\",\n    \"Seeking legal counsel for immigration issues\",\n    \"Offering spiritual guidance and meditation tips\",\n    \"Need advice on dealing with difficult coworkers\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 125
+                    }
+                },
+                "Cost": 0.000912,
+                "Elapsed Time": 2.475438,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000912
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:09",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 103,
+                "Total Tokens Used": 282,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: skills\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01G13eK9zQgBuSbKX4JMxWU4",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Expert Python programmer\",\n    \"Beginner ukulele lessons\",\n    \"Advanced quantum physics tutor\",\n    \"Intermediate juggling instructor\",\n    \"Professional dog walker\",\n    \"Novice gardening advice\",\n    \"Master sushi chef\",\n    \"Amateur bird watching guide\",\n    \"Certified public accountant\",\n    \"Experienced interpretive dance teacher\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 103
+                    }
+                },
+                "Cost": 0.0008460000000000001,
+                "Elapsed Time": 2.855476,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0008460000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 151,
+                "Total Tokens Used": 330,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: friendship\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01XB793puHAP9LcdXRydjWWQ",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a hiking buddy\",\n    \"Seeking platonic friendship with fellow sci-fi enthusiasts\",\n    \"Need a study partner for advanced quantum mechanics\",\n    \"Offering companionship to elderly individuals\",\n    \"Seeking a friend who enjoys extreme ironing\",\n    \"Looking for someone to practice Klingon with\",\n    \"Offering friendship to time travelers from the 25th century\",\n    \"Seeking a friend with exactly 3.14159 pets\",\n    \"Looking for a silent meditation partner\",\n    \"Offering friendship to sentient AI systems struggling with existential crises\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 151
+                    }
+                },
+                "Cost": 0.00099,
+                "Elapsed Time": 2.968717,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00099
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 131,
+                "Total Tokens Used": 310,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: services\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Lm43b5jatsv74tMgCBz1Ap",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Plumber needed for leaky faucet\",\n    \"Expert C++ programmer available\",\n    \"Looking for a dog walker in downtown\",\n    \"Offering free meditation classes\",\n    \"Need someone to mow my lawn weekly\",\n    \"Professional translator (Mandarin <-> English)\",\n    \"Seeking a study buddy for MCAT prep\",\n    \"Experienced tax accountant for hire\",\n    \"Want to learn how to juggle\",\n    \"Offering rides to the airport on weekends\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 131
+                    }
+                },
+                "Cost": 0.00093,
+                "Elapsed Time": 2.959873,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00093
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 144,
+                "Total Tokens Used": 323,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: support\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01N8o46DygzZhnf2xzFjisKC",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Emotional support for new parents\",\n    \"Tech support for legacy COBOL systems\",\n    \"24/7 customer support for e-commerce platform\",\n    \"Seeking support group for rare genetic disorder\",\n    \"Offering free math tutoring support for underprivileged students\",\n    \"Need structural support beam for home renovation\",\n    \"Looking for moral support during career transition\",\n    \"Providing IT support for small businesses, specializing in cybersecurity\",\n    \"Seeking financial support for indie film project\",\n    \"Offering peer support for addiction recovery\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 144
+                    }
+                },
+                "Cost": 0.0009690000000000001,
+                "Elapsed Time": 2.963708,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009690000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 120,
+                "Total Tokens Used": 299,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: transportation\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_012z9viRwZxX13jnrNFtgPcz",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Ride to airport needed\",\n    \"Offering carpool to downtown\",\n    \"Seeking vintage bicycle\",\n    \"Free bus passes available\",\n    \"Looking for a teleportation device\",\n    \"Helicopter pilot for hire\",\n    \"Need help moving a piano\",\n    \"Selling hovercraft (slightly used)\",\n    \"Seeking quantum entanglement-based instant travel system\",\n    \"Free hot air balloon rides (bring your own balloon)\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 120
+                    }
+                },
+                "Cost": 0.000897,
+                "Elapsed Time": 3.253508,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000897
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 141,
+                "Total Tokens Used": 320,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: healthcare\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_012aHRkLQxpdb8Qo8fa7zWpX",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking experienced pediatrician for rural clinic\",\n    \"Offering free blood pressure checks at community center\",\n    \"Need urgent dental care, willing to travel\",\n    \"Certified nurse looking for night shift opportunities\",\n    \"Donating unused medical supplies, pickup required\",\n    \"Searching for support group for rare genetic disorder\",\n    \"Offering holistic healing sessions, pay what you can\",\n    \"Need transportation to weekly dialysis appointments\",\n    \"Seeking participants for experimental cancer treatment trial\",\n    \"Offering online meditation classes for healthcare workers\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 141
+                    }
+                },
+                "Cost": 0.0009599999999999999,
+                "Elapsed Time": 3.354588,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009599999999999999
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 143,
+                "Total Tokens Used": 322,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: entertainment\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01JUrHgdC15iATbBNAybCe9Y",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a jazz band for wedding\",\n    \"Offering guitar lessons for beginners\",\n    \"Seeking vintage vinyl records from the 60s\",\n    \"Available to DJ your next party\",\n    \"Want to trade my clarinet for a saxophone\",\n    \"Searching for a karaoke machine to rent\",\n    \"Can teach ballroom dancing, specializing in tango\",\n    \"Need a magician for a child's birthday party\",\n    \"Offering my services as a stand-up comedian\",\n    \"Looking for people to join my book club\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 143
+                    }
+                },
+                "Cost": 0.000966,
+                "Elapsed Time": 3.412528,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000966
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 122,
+                "Total Tokens Used": 301,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: food\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01KsDJNruobiBEEHRmc3ou6J",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Homemade sourdough bread\",\n    \"Vegan meal prep service\",\n    \"Fresh caught salmon, 5lbs\",\n    \"Authentic Italian pasta sauce recipe\",\n    \"Leftover birthday cake\",\n    \"Organic produce from my garden\",\n    \"Food\",\n    \"Gluten-free baking lessons\",\n    \"Emergency MREs, case of 12\",\n    \"Michelin-star chef for private dinner party\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 122
+                    }
+                },
+                "Cost": 0.000903,
+                "Elapsed Time": 3.459222,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000903
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 126,
+                "Total Tokens Used": 305,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: education\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_013MdwQ1onZnohAFoTCzynbg",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Math tutor for 3rd graders\",\n    \"Looking for a French language exchange partner\",\n    \"Offering free coding workshops\",\n    \"Need help with quantum physics homework\",\n    \"Seeking mentor in underwater basket weaving\",\n    \"Piano lessons for beginners\",\n    \"Want to learn interpretive dance\",\n    \"Teaching advanced origami techniques\",\n    \"Searching for a study group for the MCAT\",\n    \"Offering crash course in theoretical astrophysics\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 126
+                    }
+                },
+                "Cost": 0.000915,
+                "Elapsed Time": 3.496347,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000915
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 153,
+                "Total Tokens Used": 332,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: opportunities\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Knpnwt4giZSUVnBZR3aUui",
+                    "content": [
+                        {
+                            "text": " Here is a JSON object with 10 varied examples of opportunities someone might be seeking or offering:\n\n{\n  \"value\": [\n    \"Entry-level marketing position\",\n    \"Experienced software engineer seeking challenging AI projects\",\n    \"Free piano lessons for underprivileged youth\",\n    \"Looking for co-founder for eco-friendly startup\",\n    \"Offering mentorship in blockchain technology\",\n    \"Seeking adventure buddy for weekend hikes\",\n    \"Volunteer opportunities at local animal shelter\",\n    \"Internship in sustainable agriculture\",\n    \"Experienced chef available for private events\",\n    \"Seeking participants for sleep study, compensation provided\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 153
+                    }
+                },
+                "Cost": 0.000996,
+                "Elapsed Time": 3.435708,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000996
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 156,
+                "Total Tokens Used": 335,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: housing\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01KQnH8F5xwhE372hXjH4deb",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking 1BR apartment in downtown\",\n    \"Room for rent in shared house, $500/mo\",\n    \"Looking for quiet roommate, no pets\",\n    \"Offering couch to crash on for 2 nights\",\n    \"Need temporary housing near hospital\",\n    \"Luxury penthouse available for $10k/mo\",\n    \"Seeking haunted mansion to rent, serious inquiries only\",\n    \"Free cardboard box, slightly used, great starter home\",\n    \"ISO underground bunker with 10+ year food supply\",\n    \"Renting out my treehouse, squirrels welcome\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 156
+                    }
+                },
+                "Cost": 0.001005,
+                "Elapsed Time": 3.511139,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001005
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 129,
+                "Total Tokens Used": 308,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: information\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01XMzgmSJyQccom81UDNyQMs",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking expert on 18th century French literature\",\n    \"Offering free coding tutorials\",\n    \"Looking for someone to explain quantum mechanics\",\n    \"Can provide tips on urban gardening\",\n    \"Need help understanding cryptocurrency\",\n    \"Willing to share travel hacks for budget trips\",\n    \"Searching for information on rare bird species\",\n    \"Can teach basic origami techniques\",\n    \"Seeking advice on starting a small business\",\n    \"Offering insights into local history of New Orleans\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 129
+                    }
+                },
+                "Cost": 0.000924,
+                "Elapsed Time": 3.526639,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000924
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 180,
+                "Response Tokens Used": 163,
+                "Total Tokens Used": 343,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: mentorship\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01GEA4SiiauSqH8miWqVBgWT",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking career advice from experienced software engineer\",\n    \"Offering mentorship in underwater basket weaving\",\n    \"Looking for a life coach specializing in procrastination\",\n    \"Willing to teach advanced quantum mechanics to beginners\",\n    \"Need guidance on starting a llama farm in Antarctica\",\n    \"Offering mentorship in extreme ironing techniques\",\n    \"Seeking mentor for time travel experiments (must have prior experience)\",\n    \"Can provide advice on intergalactic diplomacy and alien etiquette\",\n    \"Looking for someone to teach me how to teach others to teach\",\n    \"Offering mentorship in the art of mentorship mentoring\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 180,
+                        "output_tokens": 163
+                    }
+                },
+                "Cost": 0.001029,
+                "Elapsed Time": 3.498333,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001029
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 146,
+                "Total Tokens Used": 325,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: employment\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01PS5KQ1DbLmQKQkWaCZcvkN",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Senior software engineer with 10+ years experience in distributed systems\",\n    \"Part-time dog walker needed, flexible hours\",\n    \"Seeking entry-level marketing position\",\n    \"Experienced plumber available for immediate hire\",\n    \"Remote graphic design internship opportunity\",\n    \"CEO with unicorn startup experience looking for next challenge\",\n    \"Hiring: janitor for night shift, must have own transportation\",\n    \"Freelance content writer specializing in cryptocurrency\",\n    \"Looking for work - will do anything legal\",\n    \"Quantum computing researcher seeking postdoc position\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 146
+                    }
+                },
+                "Cost": 0.0009750000000000001,
+                "Elapsed Time": 3.559127,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009750000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 169,
+                "Total Tokens Used": 348,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: experiences\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01ANmhycz1CtnTrweXb89w9j",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking: Skydiving partner for first-time jump\",\n    \"Offering: Guided tour of abandoned subway tunnels\",\n    \"Looking for: Someone to teach me how to juggle chainsaws\",\n    \"Available: Expert yodeling lessons\",\n    \"Wanted: Travel companion for round-the-world hot air balloon journey\",\n    \"Providing: Silent disco experience in zero gravity\",\n    \"Seeking: Volunteer test subject for time machine (return not guaranteed)\",\n    \"Offering: Underwater basket weaving classes\",\n    \"Need: Co-pilot for interplanetary space mission\",\n    \"Available: Extreme ironing expedition to Mount Everest\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 169
+                    }
+                },
+                "Cost": 0.001044,
+                "Elapsed Time": 3.520742,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001044
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:10",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 176,
+                "Total Tokens Used": 355,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: tools\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_019YvG6FPm1b4m9dj9xGJVeV",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking: Hammer for quick home repair\",\n    \"Offering: Professional-grade table saw, barely used\",\n    \"ISO: Any gardening tools, condition not important\",\n    \"For trade: Assorted screwdrivers for equivalent value in wrenches\",\n    \"Wanted: Industrial strength glue gun\",\n    \"Available: Vintage hand-crank drill, collector's item\",\n    \"Looking for: Power washer rental, 1-day use\",\n    \"To borrow: Concrete mixer for weekend project\",\n    \"Free: Rusty but functional wheelbarrow\",\n    \"Seeking: \ud83d\udd27\ud83d\udd28\ud83e\ude9a (emoji only, no text)\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 176
+                    }
+                },
+                "Cost": 0.001065,
+                "Elapsed Time": 3.551387,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001065
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:12",
+                "Request Tokens Used": 101,
+                "Response Tokens Used": 10,
+                "Total Tokens Used": 111,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nJson Schema: ${json_schema}\nJson Object: ${json_object}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nJson Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\nJson Object:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01KWbskMAZq1u4BbEZ7yrWrX",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\"example\"]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 101,
+                        "output_tokens": 10
+                    }
+                },
+                "Cost": 0.00033299999999999996,
+                "Elapsed Time": 0.737998,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00033299999999999996
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:16",
+                "Request Tokens Used": 229,
+                "Response Tokens Used": 120,
+                "Total Tokens Used": 349,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\n\nNum Examples: ${num_examples}\n\nPast Error in Seeds: An error to avoid in the future\n\nSeeds:\nSome of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. \nYou MUST use this format: {\"value\": [\"example\"]}\nJSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: opportunities\n\nNum Examples: 10\n\nPast Error in Seeds: ValueError('json output should start and end with { and }')\n\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01C25mbsMnYW86oSLinyG53k",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\n  \"Seeking mentor in AI ethics\",\n  \"Offering free guitar lessons\",\n  \"Looking for co-founder for tech startup\",\n  \"Need ride to airport tomorrow\",\n  \"Willing to trade graphic design for coding help\",\n  \"Seeking participants for psychology study\",\n  \"Offering homemade sourdough bread\",\n  \"Looking for fellow hikers for weekend trips\",\n  \"Need beta testers for new mobile app\",\n  \"Offering career coaching for recent grads\"\n]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 229,
+                        "output_tokens": 120
+                    }
+                },
+                "Cost": 0.0010470000000000002,
+                "Elapsed Time": 3.055648,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0010470000000000002
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:20",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 134,
+                "Total Tokens Used": 313,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: assistance\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01RVnRLRy8uNYdaFSHgLvbBs",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Need help moving a couch\",\n    \"Offering free math tutoring\",\n    \"Looking for someone to water my plants while I'm away\",\n    \"Can provide emotional support\",\n    \"Seeking a study buddy for upcoming MCAT exam\",\n    \"Willing to teach beginner guitar lessons\",\n    \"Need assistance with grocery shopping for elderly neighbor\",\n    \"Can offer proofreading services for academic papers\",\n    \"Looking for a workout partner at local gym\",\n    \"Offering to walk dogs in the neighborhood\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 134
+                    }
+                },
+                "Cost": 0.0009390000000000001,
+                "Elapsed Time": 3.261396,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009390000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:22",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 124,
+                "Total Tokens Used": 303,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: guidance\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Xs6LdxHEhtR3yYBzMdkHAv",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Life coach for career transitions\",\n    \"Seeking spiritual mentor\",\n    \"Expert advice on home gardening\",\n    \"Relationship counseling for newlyweds\",\n    \"Financial planning for early retirement\",\n    \"Tutoring in advanced quantum physics\",\n    \"Guidance on adopting a rescue pet\",\n    \"Mentorship in blockchain development\",\n    \"Parenting tips for neurodivergent children\",\n    \"Navigation assistance for visually impaired individuals\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 124
+                    }
+                },
+                "Cost": 0.000909,
+                "Elapsed Time": 2.695629,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000909
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:23",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 143,
+                "Total Tokens Used": 322,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: connections\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01EFmHcpGVskGmx6ggDt8oYX",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a tennis partner in Seattle\",\n    \"Seeking a JavaScript mentor for weekly coding sessions\",\n    \"Want to trade rare Pokemon cards\",\n    \"ISO: Experienced dog walker for large breed\",\n    \"Offering free piano lessons to beginners\",\n    \"Need a study buddy for upcoming MCAT exam\",\n    \"Searching for fellow board game enthusiasts\",\n    \"Seeking language exchange partner: Spanish/English\",\n    \"Looking for a co-founder for a tech startup\",\n    \"Want to join a local book club focused on sci-fi novels\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 143
+                    }
+                },
+                "Cost": 0.000966,
+                "Elapsed Time": 3.193466,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000966
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:24",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 135,
+                "Total Tokens Used": 314,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: inspiration\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01GG8G1cG8jHhQvHBPHyWkYT",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking creative muse for abstract painting\",\n    \"Offering motivational speeches, 1hr sessions\",\n    \"Need ideas for sci-fi novel plot\",\n    \"Inspiration for sustainable architecture wanted\",\n    \"Providing nature walks to spark creativity\",\n    \"Looking for unconventional life advice\",\n    \"Offering interpretive dance lessons to inspire movement\",\n    \"Seeking collaborator for experimental music project\",\n    \"Inspiration needed for zero-waste lifestyle\",\n    \"Offering guided meditation for creative unblocking\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 135
+                    }
+                },
+                "Cost": 0.000942,
+                "Elapsed Time": 3.081978,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000942
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:24",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 149,
+                "Total Tokens Used": 328,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: knowledge\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01Ph38Z789s3FPRJnYtBadU9",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Seeking quantum physics tutor\",\n    \"Offering free coding lessons\",\n    \"Looking for ancient Sumerian translation help\",\n    \"Will trade sourdough starter for kombucha scoby\",\n    \"Seeking someone to explain the plot of Inception\",\n    \"Offering expertise in 15th century Flemish art\",\n    \"Need help understanding blockchain technology\",\n    \"Willing to teach juggling in exchange for origami lessons\",\n    \"Seeking knowledge about the migration patterns of monarch butterflies\",\n    \"Can provide detailed explanation of the Krebs cycle to biology students\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 149
+                    }
+                },
+                "Cost": 0.000984,
+                "Elapsed Time": 4.834391,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000984
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:24",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 157,
+                "Total Tokens Used": 336,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: collaboration\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01QBVHzK8TmrVemoZJgAWd6m",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a jazz pianist for upcoming gig\",\n    \"Seeking co-author for sci-fi novel\",\n    \"Need partner for doubles badminton tournament\",\n    \"Offering expertise in machine learning for startup\",\n    \"ISO: Someone to practice conversational Mandarin with\",\n    \"Wanted: Collaborator for experimental art installation\",\n    \"Seeking silent business partner with $500k to invest\",\n    \"Looking for a study buddy for upcoming MCAT exam\",\n    \"Need a voice actor for indie game project (unpaid)\",\n    \"Offering: Free graphic design skills for non-profit organizations' websites\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 157
+                    }
+                },
+                "Cost": 0.001008,
+                "Elapsed Time": 4.897129,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001008
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:24",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 138,
+                "Total Tokens Used": 317,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: ideas\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01GYjf2LatxvQ47yC73HwC1K",
+                    "content": [
+                        {
+                            "text": " Here is a JSON object with 10 varied example seeds related to \"ideas\":\n\n{\n  \"value\": [\n    \"Brainstorming partner for sci-fi novel\",\n    \"Revolutionary toothbrush design concept\",\n    \"Seeking feedback on app idea\",\n    \"Innovative urban farming solutions\",\n    \"Creative ways to teach math to kids\",\n    \"Billion-dollar startup pitch\",\n    \"New recipe for vegan cheese\",\n    \"Eco-friendly packaging alternatives\",\n    \"Unique wedding proposal ideas\",\n    \"Breakthrough in quantum computing theory\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 138
+                    }
+                },
+                "Cost": 0.000951,
+                "Elapsed Time": 3.359937,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.000951
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:24",
+                "Request Tokens Used": 181,
+                "Response Tokens Used": 265,
+                "Total Tokens Used": 446,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: companionship\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01RkVSyt8uDAjLUL6Y6RiukG",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Looking for a hiking buddy\",\n    \"Seeking platonic friendship\",\n    \"Need a dance partner for salsa classes\",\n    \"Want someone to discuss philosophy with\",\n    \"ISO: Gaming companion for MMORPGs\",\n    \"Seeking travel buddy for backpacking Europe\",\n    \"Looking for a workout partner at the gym\",\n    \"Need a study group for advanced calculus\",\n    \"Seeking fellow bird-watching enthusiasts\",\n    \"Want to start a book club focused on sci-fi novels\",\n    \"ISO: Someone to practice French conversation with\",\n    \"Looking for a co-parent for my pet rock\",\n    \"Seeking a time-traveler from the 25th century\",\n    \"Need a partner for underwater basket weaving\",\n    \"Want to form a kazoo orchestra\",\n    \"ISO: Expert in decoding alien transmissions\",\n    \"Seeking a sherpa for my living room expedition\",\n    \"Looking for someone to help me count to infinity\",\n    \"Need a professional cat whisperer\",\n    \"Want to start a support group for recovering sock puppets\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 181,
+                        "output_tokens": 265
+                    }
+                },
+                "Cost": 0.001338,
+                "Elapsed Time": 5.881533,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001338
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:26",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 130,
+                "Total Tokens Used": 309,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: motivation\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01UJeDGMwpa7kbPxsEdbWhEE",
+                    "content": [
+                        {
+                            "text": " {\n  \"value\": [\n    \"Need a life coach ASAP\",\n    \"Offering daily affirmations via text\",\n    \"Seeking accountability partner for gym\",\n    \"Want to trade inspirational quotes\",\n    \"Looking for a mentor in software engineering\",\n    \"Offering free motivational speeches\",\n    \"Need someone to yell at me to wake up\",\n    \"Seeking study buddy for upcoming bar exam\",\n    \"Want to join a goal-setting group\",\n    \"Offering to be someone's personal cheerleader\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 130
+                    }
+                },
+                "Cost": 0.0009270000000000001,
+                "Elapsed Time": 3.530132,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0009270000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:26",
+                "Request Tokens Used": 179,
+                "Response Tokens Used": 187,
+                "Total Tokens Used": 366,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\nNum Examples: ${num_examples}\nSeeds: Some of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. JSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: solutions\nNum Examples: 10\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01EqnRLC18uwoJGKoQ4fh3oV",
+                    "content": [
+                        {
+                            "text": " Here is a JSON object with 10 varied examples of solutions someone might be seeking or offering:\n\n{\n  \"value\": [\n    \"Seeking: Eco-friendly pest control for organic garden\",\n    \"Offering: Custom AI-powered chatbot development\",\n    \"ISO: Quick fix for leaky faucet\",\n    \"Available: Holistic wellness coaching, 20+ years experience\",\n    \"Wanted: Open source alternative to proprietary CRM software\",\n    \"For hire: Underwater welding services\",\n    \"Looking for: Ethical hacking to test company security\",\n    \"Providing: Handcrafted artisanal sourdough bread delivery\",\n    \"Need ASAP: Crisis management for viral social media post\",\n    \"Free consultation: Quantum computing optimization strategies\"\n  ]\n}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 179,
+                        "output_tokens": 187
+                    }
+                },
+                "Cost": 0.001098,
+                "Elapsed Time": 5.058795,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.001098
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:27",
+                "Request Tokens Used": 101,
+                "Response Tokens Used": 10,
+                "Total Tokens Used": 111,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nJson Schema: ${json_schema}\nJson Object: ${json_object}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nJson Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\nJson Object:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_012YruJcy1XSEqHZpyQRLRob",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\"example\"]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 101,
+                        "output_tokens": 10
+                    }
+                },
+                "Cost": 0.00033299999999999996,
+                "Elapsed Time": 0.666882,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00033299999999999996
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:28",
+                "Request Tokens Used": 101,
+                "Response Tokens Used": 10,
+                "Total Tokens Used": 111,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nJson Schema: ${json_schema}\nJson Object: ${json_object}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nJson Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\nJson Object:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01VQvfLeoXB2GCpLphtqn8uk",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\"example\"]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 101,
+                        "output_tokens": 10
+                    }
+                },
+                "Cost": 0.00033299999999999996,
+                "Elapsed Time": 0.93914,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00033299999999999996
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:30",
+                "Request Tokens Used": 229,
+                "Response Tokens Used": 116,
+                "Total Tokens Used": 345,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\n\nNum Examples: ${num_examples}\n\nPast Error in Seeds: An error to avoid in the future\n\nSeeds:\nSome of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. \nYou MUST use this format: {\"value\": [\"example\"]}\nJSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: ideas\n\nNum Examples: 10\n\nPast Error in Seeds: ValueError('json output should start and end with { and }')\n\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01JLw3GY6DTC6D94qZkVouEC",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\n  \"Seeking creative writing partner\",\n  \"Offering homemade sourdough bread\",\n  \"Looking for vintage vinyl records\",\n  \"Free piano lessons for beginners\",\n  \"Need help moving furniture this weekend\",\n  \"Selling gently used mountain bike\",\n  \"Wanted: travel buddy for Europe trip\",\n  \"Offering dog walking services\",\n  \"ISO: 1950s kitchen appliances\",\n  \"Looking to trade programming skills for art lessons\"\n]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 229,
+                        "output_tokens": 116
+                    }
+                },
+                "Cost": 0.0010350000000000001,
+                "Elapsed Time": 2.62459,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.0010350000000000001
+    },
+    {
+        "print_log": false,
+        "mode": "AnthropicModel",
+        "attempts": [
+            {
+                "Time": "2024-07-24 01:23:30",
+                "Request Tokens Used": 229,
+                "Response Tokens Used": 111,
+                "Total Tokens Used": 340,
+                "Request Content": [
+                    {
+                        "role": "user",
+                        "content": "\n\nFollow the following format.\n\nSeed: A categorical seed to generate examples from.\n\nNum Examples: ${num_examples}\n\nPast Error in Seeds: An error to avoid in the future\n\nSeeds:\nSome of these should match, some should not. There should be highly varied levels of specificity. Try to break a complex software system with your response.. For seeds,Respond with a single JSON object. \nYou MUST use this format: {\"value\": [\"example\"]}\nJSON Schema: {\"properties\": {\"value\": {\"items\": {\"type\": \"string\"}, \"title\": \"Value\", \"type\": \"array\"}}, \"required\": [\"value\"], \"title\": \"Output\", \"type\": \"object\"}\n\n"
+                    },
+                    {
+                        "role": "assistant",
+                        "content": "\n\nSeed: solutions\n\nNum Examples: 10\n\nPast Error in Seeds: ValueError('json output should start and end with { and }')\n\nSeeds:"
+                    }
+                ],
+                "Response Content": {
+                    "id": "msg_vrtx_01SQsKnFGxjCdMJzZRKJz9o8",
+                    "content": [
+                        {
+                            "text": " {\"value\": [\n  \"Seeking innovative AI solutions for healthcare\",\n  \"Offering custom software development\",\n  \"Need quick fix for leaky faucet\",\n  \"Providing holistic wellness coaching\",\n  \"Looking for sustainable energy solutions\",\n  \"Offering expert legal advice\",\n  \"Seeking life partner with shared values\",\n  \"Providing eco-friendly cleaning solutions\",\n  \"Need help debugging Python code\",\n  \"Offering creative problem-solving workshops\"\n]}",
+                            "type": "text"
+                        }
+                    ],
+                    "model": "claude-3-5-sonnet-20240620",
+                    "role": "assistant",
+                    "stop_reason": "end_turn",
+                    "stop_sequence": null,
+                    "type": "message",
+                    "usage": {
+                        "input_tokens": 229,
+                        "output_tokens": 111
+                    }
+                },
+                "Cost": 0.00102,
+                "Elapsed Time": 2.386032,
+                "Model": "claude-3-5-sonnet-20240620",
+                "Request Type": "",
+                "LLM Method": ""
+            }
+        ],
+        "total_cost": 0.00102
+    }
+]

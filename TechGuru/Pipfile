@@ -26,6 +26,10 @@ redis = "*"
 stdlib-list = "*"
 networkx = "*"
 matplotlib = "*"
+dspy-ai = "*"
+anthropic = {extras = ["vertex"], version = "*"}
+scikit-learn = "*"
+pyright = "*"
 
 [dev-packages]
 

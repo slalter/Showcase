@@ -745,9 +745,11 @@ class DependencyAnalyzer:
             object_type=object.__class__.__name__, 
             object_data={'name':object.name, 'code':object.code}
             )
-        log, response = prompt.execute(model='gpt-3.5-turbo')
+        call = prompt.execute(model='gpt-3.5-turbo')
+        log = call.log
+        response = call.get()
         object.add_llm_log(log, session)
-        return response['choices'][0]['message']['content']
+        return response
         
     def cleanup(self, root_file, session):
         #go through all the dependencies on all the objects and dedupe them, including combining packages that have multiple imports from the same base module.

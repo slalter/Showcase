@@ -24,13 +24,14 @@ def getCosts(model):
 
 class Log:
     class Attempt:
-        def __init__(self, messages, response, elapsed_time, request_type=None, llm_method=None):
+        def __init__(self, messages, response, elapsed_time, request_type=None, llm_method=None, costs:tuple[float,float]|None=None):
             self.time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             self.request_type = request_type
             self.elapsed_time = elapsed_time
             self.request_content = messages
             self.response_content = self._parse_response(response)
             self.request_tokens, self.response_tokens, self.total_tokens, self.model = self._extract_response_details(self.response_content)
+            self.costs = costs
             self.cost = self._calculate_cost()
             self.llm_method = llm_method
 
@@ -68,14 +69,14 @@ class Log:
                 except Exception as e:
                     self.response_content += f"Unable to parse response! \n response:\n{response}\n\nexception: \n{traceback.format_exception(e)}.\n type: {type(response)}"
                     return 0,0,0,0 
-            request_tokens = response['usage']['prompt_tokens']
-            response_tokens = response['usage']['completion_tokens']
-            total_tokens = response['usage']['total_tokens']
+            request_tokens = response['usage'].get('prompt_tokens') or response['usage'].get('input_tokens')
+            response_tokens = response['usage'].get('completion_tokens') or response['usage'].get('output_tokens')
+            total_tokens = response['usage'].get('total_tokens') or request_tokens + response_tokens
             model = response['model']
             return request_tokens, response_tokens, total_tokens, model
 
         def _calculate_cost(self):
-            prompt_cost, completion_cost = getCosts(self.model)
+            prompt_cost, completion_cost = self.costs or getCosts(self.model)
             return (self.request_tokens * prompt_cost + self.response_tokens * completion_cost) / 1000
 
         def to_dict(self):
@@ -95,17 +96,16 @@ class Log:
         def __str__(self):
             return json.dumps(self.to_dict(), indent = 4)
     
-    def __init__(self, logging_mode='save_to_csv', print_log=True, mode='OPEN_AI'):
+    def __init__(self, print_log=True, mode='OPEN_AI'):
         self.attempts = []
         self.path = os.environ.get('GLLM_LOGGING_PATH', '')
-        self.logging_mode = logging_mode
         self.print_log = print_log
         self.mode = mode
         self.created_at = datetime.utcnow().isoformat()
 
-    def add_attempt(self, messages, response, elapsed_time, request_type=None, llm_method=None):
+    def add_attempt(self, messages, response, elapsed_time, request_type=None, llm_method=None, costs=None):
         try:
-            attempt = self.Attempt(messages, response, elapsed_time, request_type, llm_method)
+            attempt = self.Attempt(messages, response, elapsed_time, request_type, llm_method,costs)
             self.attempts.append(attempt)
             if self.print_log:
                 print(f"{self.mode}\n"+str(attempt))
@@ -141,12 +141,14 @@ class Log:
 
     def to_dict(self):
         return {
-            'logging_mode': self.logging_mode,
             'print_log': self.print_log,
             'mode': self.mode,
-            'attempts': [attempt.to_dict() for attempt in self.attempts]
+            'attempts': [attempt.to_dict() for attempt in self.attempts],
+            'total_cost': sum(attempt.cost for attempt in self.attempts)
         }
 
     def __str__(self):
         return json.dumps(self.to_dict(), indent=4, sort_keys=True)
     
+    def get_cost(self):
+        return sum(attempt.cost for attempt in self.attempts)
